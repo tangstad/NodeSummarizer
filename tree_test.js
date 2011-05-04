@@ -66,5 +66,24 @@ vows.describe('Node Summarizer').addBatch({
             }
             assert.equal (length, 0);
         }
+    },
+    
+    'Text parser with single root node': {
+        topic: parseText("\t1\t15"),
+        
+        'gives single node': function(nodes) {
+            var length = 0;
+            var node;
+            var id;
+            var n;
+            for (n in nodes){ 
+                length += 1;
+                id = n;
+                node = nodes[n];
+            }
+            assert.equal (length, 1);
+            assert.equal (n, 1);
+            assert.equal (node.value, 15);
+        }
     }
 }).run();
