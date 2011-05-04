@@ -2,7 +2,7 @@ var vows = require('vows'),
     assert = require('assert');
 
 var TreeModule = require('./tree');
-var Tree = TreeModule.Tree
+var Tree = TreeModule.Tree;
     
 vows.describe('Tree').addBatch({
     'when making a new tree node': {
