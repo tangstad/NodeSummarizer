@@ -14,6 +14,10 @@ vows.describe('Node Summarizer').addBatch({
         
         'has no parent': function(tree) {
             assert.isUndefined (tree.getParent());
+        },
+        
+        'sum is same as own value': function(tree) {
+            assert.equal (tree.sum(), 125);
         }
     },
     'Child and parent nodes': {
@@ -28,6 +32,11 @@ vows.describe('Node Summarizer').addBatch({
             var list = parent.getChildren();
             assert.equal (list.length, 1);
             assert.equal (list[0].value, 10);
+        },
+        
+        'sum is sum of self and child': function(parent) {
+            assert.equal (parent.sum(), 10+20);
         }
+        
     }
 }).run();
