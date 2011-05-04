@@ -29,7 +29,13 @@ Tree.prototype.sum = function() {
     return total;
 };
 
+// Create object of all nodes based on tab-delimited text
+var parseText = function(text) {
+    return {};
+};
+
 // export to node.js module
 if(typeof(exports) !== 'undefined' && exports !== null) {
   exports.Tree = Tree;
+  exports.parseText = parseText;
 }

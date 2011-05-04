@@ -3,6 +3,7 @@ var vows = require('vows'),
 
 var TreeModule = require('./tree');
 var Tree = TreeModule.Tree;
+var parseText = TreeModule.parseText;
     
 vows.describe('Node Summarizer').addBatch({
     'Single tree node': {
@@ -51,6 +52,19 @@ vows.describe('Node Summarizer').addBatch({
         
         'can get sum of self and all children': function(parent) {
             assert.equal (parent.sum(), 10+20+30);
+        }
+    },
+    
+    'Text parser with empty string': {
+        topic: parseText(""),
+        
+        'gives empty set of nodes': function(nodes) {
+            var length = 0;
+            var n;
+            for (n in nodes){ 
+                length += 1;
+            }
+            assert.equal (length, 0);
         }
     }
 }).run();
