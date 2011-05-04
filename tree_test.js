@@ -37,6 +37,20 @@ vows.describe('Node Summarizer').addBatch({
         'sum is sum of self and child': function(parent) {
             assert.equal (parent.sum(), 10+20);
         }
+    },
+    
+    'Node with multiple children': {
+        topic: function() {
+            var child1 = new Tree(10);
+            var child2 = new Tree(20);
+            var parent = new Tree(30);
+            parent.addChild(child1);
+            parent.addChild(child2);
+            return parent;
+        },
         
+        'can get sum of self and all children': function(parent) {
+            assert.equal (parent.sum(), 10+20+30);
+        }
     }
 }).run();
