@@ -10,6 +10,10 @@ vows.describe('Node Summarizer').addBatch({
         
         'has a value': function(tree) {
             assert.equal (tree.value, 125);
+        },
+        
+        'has no parent': function(tree) {
+            assert.isUndefined (tree.getParent());
         }
     }
 }).run();
