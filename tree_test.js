@@ -15,5 +15,19 @@ vows.describe('Node Summarizer').addBatch({
         'has no parent': function(tree) {
             assert.isUndefined (tree.getParent());
         }
+    },
+    'Child and parent nodes': {
+        topic: function() {
+            var child = new Tree(10);
+            var parent = new Tree(20);
+            parent.addChild(child);
+            return parent;
+        },
+        
+        'can get list of children': function(parent) {
+            var list = parent.getChildren();
+            assert.equal (list.length, 1);
+            assert.equal (list[0].value, 10);
+        }
     }
 }).run();
