@@ -4,12 +4,12 @@ var vows = require('vows'),
 var TreeModule = require('./tree');
 var Tree = TreeModule.Tree;
     
-vows.describe('Tree').addBatch({
-    'when making a new tree node': {
-        topic: function() { return new Tree(125); },
+vows.describe('Node Summarizer').addBatch({
+    'Single tree node': {
+        topic: new Tree(125),
         
-        'it has a value': function(topic) {
-            assert.equal (topic.value, 125);
+        'has a value': function(tree) {
+            assert.equal (tree.value, 125);
         }
     }
 }).run();
