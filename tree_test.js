@@ -88,22 +88,8 @@ vows.describe('Node Summarizer').addBatch({
             assert.equal (countNodes(nodes), 1);
         },
 
-	'has correct node id': function(nodes) {
-            var node;
-            var n;
-            for (n in nodes){
-                node = nodes[n];
-            }
-            assert.equal (n, 1);
-	},
-
-	'has correct node value': function(nodes) {
-            var node;
-            var n;
-            for (n in nodes){
-                node = nodes[n];
-            }
-            assert.equal (node.value, 15);
+	'has correct node': function(nodes) {
+            assert.equal (nodes['1'].value, 15);
 	}
     },
 
