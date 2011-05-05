@@ -85,14 +85,7 @@ vows.describe('Node Summarizer').addBatch({
         topic: parseText("\t1\t15"),
         
         'gives single node': function(nodes) {
-            var length = 0;
-            var node;
-            var n;
-            for (n in nodes){ 
-                length += 1;
-                node = nodes[n];
-            }
-            assert.equal (length, 1);
+            assert.equal (countNodes(nodes), 1);
         },
 
 	'has correct node id': function(nodes) {
