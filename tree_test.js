@@ -105,5 +105,15 @@ vows.describe('Node Summarizer').addBatch({
 	    var child = nodes['2'];
 	    assert.equal (parent.getChildren()[0], child);
 	}
+    },
+
+    'Text parser with parent and child nodes in reverse order': {
+        topic: parseText("1\t2\t35\n\t1\t20"),
+
+	'has right relationship': function(nodes) {
+	    var parent = nodes['1'];
+	    var child = nodes['2'];
+	    assert.equal (parent.getChildren()[0], child);
+	}
     }
 }).run();

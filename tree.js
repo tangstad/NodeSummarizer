@@ -40,15 +40,20 @@ var parseText = function(text) {
         var nodes = {};
         for (var i=0; i<lines.length; i++) {
             list = lines[i].split("\t");
-	    parent = list[0];
             id = list[1];
             value = list[2];
 	    node = new Tree(value);
-	    if (parent !== "") {
-		nodes[parent].addChild(node);
-	    }
             nodes[id] = node;;
         };
+	// traverse again to connect parents
+        for (var i=0; i<lines.length; i++) {
+            list = lines[i].split("\t");
+	    parent = list[0];
+            id = list[1];
+	    if (parent !== "") {
+		nodes[parent].addChild(nodes[id]);
+	    }
+	}
         return nodes;
     }
 };
