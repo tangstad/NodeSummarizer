@@ -35,11 +35,15 @@ var parseText = function(text) {
         return {};    
     }
     else {
-        var list = text.split("\t");
-        var id = list[1];
-        var value = list[2];
+        var lines = text.split("\n");
+        var list, id, value;
         var nodes = {};
-        nodes[id] = new Tree(value);
+        for (var i=0; i<lines.length; i++) {
+            list = lines[i].split("\t");
+            id = list[1];
+            value = list[2];
+            nodes[id] = new Tree(value);
+        }
         return nodes;
     }
 };

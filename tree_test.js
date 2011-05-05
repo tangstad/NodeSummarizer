@@ -4,6 +4,19 @@ var vows = require('vows'),
 var TreeModule = require('./tree');
 var Tree = TreeModule.Tree;
 var parseText = TreeModule.parseText;
+
+var countNodes = function(nodes) {
+    var length = 0;
+    var node;
+    var id;
+    var n;
+    for (n in nodes){
+        length += 1;
+        id = n;
+        node = nodes[n];
+    }
+    return length;
+};
     
 vows.describe('Node Summarizer').addBatch({
     'Single tree node': {
@@ -84,6 +97,14 @@ vows.describe('Node Summarizer').addBatch({
             assert.equal (length, 1);
             assert.equal (n, 1);
             assert.equal (node.value, 15);
+        }
+    },
+
+    'Text parser with parent and child nodes': {
+        topic: parseText("\t1\t20\n1\t2\t35"),
+
+        'gives two nodes': function(nodes) {
+            assert.equal (countNodes(nodes), 2);
         }
     }
 }).run();
