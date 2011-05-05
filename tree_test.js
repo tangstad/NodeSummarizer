@@ -98,6 +98,12 @@ vows.describe('Node Summarizer').addBatch({
 
         'gives two nodes': function(nodes) {
             assert.equal (countNodes(nodes), 2);
-        }
+        },
+
+	'has right relationship': function(nodes) {
+	    var parent = nodes['1'];
+	    var child = nodes['2'];
+	    assert.equal (parent.getChildren()[0], child);
+	}
     }
 }).run();

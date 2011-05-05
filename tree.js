@@ -36,14 +36,19 @@ var parseText = function(text) {
     }
     else {
         var lines = text.split("\n");
-        var list, id, value;
+        var list, id, value, parent, node;
         var nodes = {};
         for (var i=0; i<lines.length; i++) {
             list = lines[i].split("\t");
+	    parent = list[0];
             id = list[1];
             value = list[2];
-            nodes[id] = new Tree(value);
-        }
+	    node = new Tree(value);
+	    if (parent !== "") {
+		nodes[parent].addChild(node);
+	    }
+            nodes[id] = node;;
+        };
         return nodes;
     }
 };
