@@ -87,37 +87,27 @@ vows.describe('Node Summarizer').addBatch({
         'gives single node': function(nodes) {
             var length = 0;
             var node;
-            var id;
             var n;
             for (n in nodes){ 
                 length += 1;
-                id = n;
                 node = nodes[n];
             }
             assert.equal (length, 1);
         },
 
 	'has correct node id': function(nodes) {
-            var length = 0;
             var node;
-            var id;
             var n;
             for (n in nodes){
-                length += 1;
-                id = n;
                 node = nodes[n];
             }
             assert.equal (n, 1);
 	},
 
 	'has correct node value': function(nodes) {
-            var length = 0;
             var node;
-            var id;
             var n;
             for (n in nodes){
-                length += 1;
-                id = n;
                 node = nodes[n];
             }
             assert.equal (node.value, 15);
