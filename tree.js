@@ -36,6 +36,9 @@ var parseText = function(text) {
     }
     else {
         var lines = text.split("\n");
+        if (lines[lines.length-1] === "") {
+            lines.pop();
+        }
         var list, id, value, parent, node;
         var nodes = {};
         for (var i=0; i<lines.length; i++) {

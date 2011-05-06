@@ -111,5 +111,13 @@ vows.describe('Node Summarizer').addBatch({
             var child = nodes['2'];
             assert.equal (parent.getChildren()[0], child);
         }
+    },
+    
+    'Text parser with extra line at end': {
+        topic: parseText("\t1\t15\n"),
+
+        'should ignore extra empty line': function(nodes) {
+            assert.equal (countNodes(nodes), 1);
+        }
     }
 }).run();
