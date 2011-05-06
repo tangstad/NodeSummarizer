@@ -42,18 +42,18 @@ var parseText = function(text) {
             list = lines[i].split("\t");
             id = list[1];
             value = list[2];
-	    node = new Tree(value);
+            node = new Tree(value);
             nodes[id] = node;;
         };
-	// traverse again to connect parents
+        // traverse again to connect parents
         for (var i=0; i<lines.length; i++) {
             list = lines[i].split("\t");
-	    parent = list[0];
+            parent = list[0];
             id = list[1];
-	    if (parent !== "") {
-		nodes[parent].addChild(nodes[id]);
-	    }
-	}
+            if (parent !== "") {
+                nodes[parent].addChild(nodes[id]);
+            }
+        }
         return nodes;
     }
 };
