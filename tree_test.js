@@ -119,5 +119,13 @@ vows.describe('Node Summarizer').addBatch({
         'should ignore extra empty line': function(nodes) {
             assert.equal (countNodes(nodes), 1);
         }
+    },
+    
+    'Text parser with extra line in the middle': {
+        topic: parseText("1\t2\t35\n\n\t1\t20"),
+
+        'should ignore extra empty line': function(nodes) {
+            assert.equal (countNodes(nodes), 2);
+        }
     }
 }).run();

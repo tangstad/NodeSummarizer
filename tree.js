@@ -36,12 +36,12 @@ var parseText = function(text) {
     }
     else {
         var lines = text.split("\n");
-        if (lines[lines.length-1] === "") {
-            lines.pop();
-        }
         var list, id, value, parent, node;
         var nodes = {};
         for (var i=0; i<lines.length; i++) {
+            if (lines[i] === "") {
+                continue;
+            }
             list = lines[i].split("\t");
             id = list[1];
             value = list[2];
