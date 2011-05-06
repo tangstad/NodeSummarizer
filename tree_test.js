@@ -7,13 +7,9 @@ var parseText = TreeModule.parseText;
 
 var countNodes = function(nodes) {
     var length = 0;
-    var node;
-    var id;
     var n;
     for (n in nodes){
         length += 1;
-        id = n;
-        node = nodes[n];
     }
     return length;
 };
