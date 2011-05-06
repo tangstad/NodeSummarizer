@@ -16,10 +16,14 @@ var countNodes = function(nodes) {
     
 vows.describe('Node Summarizer').addBatch({
     'Single tree node': {
-        topic: new Tree(125),
+        topic: new Tree(125, 1),
         
         'has a value': function(tree) {
             assert.equal (tree.value, 125);
+        },
+        
+        'should have id set': function(tree) {
+            assert.equal (tree.id, 1);
         },
         
         'has no parent': function(tree) {
@@ -30,10 +34,19 @@ vows.describe('Node Summarizer').addBatch({
             assert.equal (tree.sum(), 125);
         }
     },
+    
+    'Node with different id': {
+        topic: new Tree(125, 25),
+        
+        'should have proper id set': function(tree) {
+            assert.equal (tree.id, 25);
+        }
+    },
+    
     'Child and parent nodes': {
         topic: function() {
-            var child = new Tree(10);
-            var parent = new Tree(20);
+            var child = new Tree(10, 2);
+            var parent = new Tree(20, 1);
             parent.addChild(child);
             return parent;
         },
