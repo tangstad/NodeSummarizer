@@ -44,7 +44,7 @@ vows.describe('Node Summarizer').addBatch({
         
         'can get list of children': function(parent) {
             var list = parent.getChildren();
-            assert.equal (list.length, 1);
+            assert.length (list, 1);
             assert.equal (list[0].value, 10);
         },
         
