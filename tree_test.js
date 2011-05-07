@@ -15,130 +15,134 @@ var countNodes = function(nodes) {
 };
     
 vows.describe('Node Summarizer').addBatch({
-    'Single tree node': {
-        topic: new Tree(125, 1),
+    'A tree node': {
+        'when single': {
+            topic: new Tree(125, 1),
         
-        'has a value': function(tree) {
-            assert.equal (tree.value, 125);
-        },
+            'should have a value': function(tree) {
+                assert.equal (tree.value, 125);
+            },
         
-        'should have id set': function(tree) {
-            assert.equal (tree.id, 1);
-        },
+            'should have id set': function(tree) {
+                assert.equal (tree.id, 1);
+            },
         
-        'has no parent': function(tree) {
-            assert.isUndefined (tree.getParent());
-        },
+            'should have no parent': function(tree) {
+                assert.isUndefined (tree.getParent());
+            },
         
-        'sum is same as own value': function(tree) {
-            assert.equal (tree.sum(), 125);
-        }
-    },
-    
-    'Node with different id': {
-        topic: new Tree(125, 25),
-        
-        'should have proper id set': function(tree) {
-            assert.equal (tree.id, 25);
-        }
-    },
-    
-    'Child and parent nodes': {
-        topic: function() {
-            var child = new Tree(10, 2);
-            var parent = new Tree(20, 1);
-            parent.addChild(child);
-            return parent;
-        },
-        
-        'can get list of children': function(parent) {
-            var list = parent.getChildren();
-            assert.length (list, 1);
-            assert.equal (list[0].value, 10);
-        },
-        
-        'sum is sum of self and child': function(parent) {
-            assert.equal (parent.sum(), 10+20);
-        }
-    },
-    
-    'Node with multiple children': {
-        topic: function() {
-            var child1 = new Tree(10);
-            var child2 = new Tree(20);
-            var parent = new Tree(30);
-            parent.addChild(child1);
-            parent.addChild(child2);
-            return parent;
-        },
-        
-        'can get sum of self and all children': function(parent) {
-            assert.equal (parent.sum(), 10+20+30);
-        }
-    },
-    
-    'Text parser with empty string': {
-        topic: parseText(""),
-        
-        'gives empty set of nodes': function(nodes) {
-            var length = 0;
-            var n;
-            for (n in nodes){ 
-                length += 1;
+            'should have sum same as own value': function(tree) {
+                assert.equal (tree.sum(), 125);
             }
-            assert.equal (length, 0);
-        }
-    },
+        },
     
-    'Text parser with single root node': {
-        topic: parseText("\t1\t15"),
+        'when made with different id': {
+            topic: new Tree(125, 25),
         
-        'gives single node': function(nodes) {
-            assert.equal (countNodes(nodes), 1);
+            'should have proper id set': function(tree) {
+                assert.equal (tree.id, 25);
+            }
         },
 
-        'has correct node': function(nodes) {
-            assert.equal (nodes['1'].value, 15);
-        }
+        'when it has a child': {
+            topic: function() {
+                var child = new Tree(10, 2);
+                var parent = new Tree(20, 1);
+                parent.addChild(child);
+                return parent;
+            },
+        
+            'should have child in list of children': function(parent) {
+                var list = parent.getChildren();
+                assert.length (list, 1);
+                assert.equal (list[0].value, 10);
+            },
+        
+            'should have sum of values self and child': function(parent) {
+                assert.equal (parent.sum(), 10+20);
+            }
+        },
+    
+        'when it has multiple children': {
+            topic: function() {
+                var child1 = new Tree(10);
+                var child2 = new Tree(20);
+                var parent = new Tree(30);
+                parent.addChild(child1);
+                parent.addChild(child2);
+                return parent;
+            },
+        
+            'should have sum of self and all children': function(parent) {
+                assert.equal (parent.sum(), 10+20+30);
+            }
+        },
     },
+    
+    'Text parser': {
+        'with empty string': {
+            topic: parseText(""),
+        
+            'should give empty set of nodes': function(nodes) {
+                var length = 0;
+                var n;
+                for (n in nodes){ 
+                    length += 1;
+                }
+                assert.equal (length, 0);
+            }
+        },
+    
+        'with single root node': {
+            topic: parseText("\t1\t15"),
+        
+            'should give single node': function(nodes) {
+                assert.equal (countNodes(nodes), 1);
+            },
 
-    'Text parser with parent and child nodes': {
-        topic: parseText("\t1\t20\n1\t2\t35"),
-
-        'gives two nodes': function(nodes) {
-            assert.equal (countNodes(nodes), 2);
+            'should give node with value and id parsed': function(nodes) {
+                assert.equal (nodes['1'].value, 15);
+            }
         },
 
-        'has right relationship': function(nodes) {
-            var parent = nodes['1'];
-            var child = nodes['2'];
-            assert.equal (parent.getChildren()[0], child);
-        }
-    },
+        'with parent and child nodes': {
+            topic: parseText("\t1\t20\n1\t2\t35"),
 
-    'Text parser with parent and child nodes in reverse order': {
-        topic: parseText("1\t2\t35\n\t1\t20"),
+            'should give two nodes': function(nodes) {
+                assert.equal (countNodes(nodes), 2);
+            },
 
-        'has right relationship': function(nodes) {
-            var parent = nodes['1'];
-            var child = nodes['2'];
-            assert.equal (parent.getChildren()[0], child);
-        }
-    },
+            'should give parent with child set': function(nodes) {
+                var parent = nodes['1'];
+                var child = nodes['2'];
+                assert.equal (parent.getChildren()[0], child);
+            }
+        },
+
+        'with parent and child nodes in reverse order': {
+            topic: parseText("1\t2\t35\n\t1\t20"),
+
+            'should give parent with child set': function(nodes) {
+                var parent = nodes['1'];
+                var child = nodes['2'];
+                assert.equal (parent.getChildren()[0], child);
+            }
+        },
+        
+        'with extra line at end': {
+            topic: parseText("\t1\t15\n"),
+
+            'should ignore extra empty line': function(nodes) {
+                assert.equal (countNodes(nodes), 1);
+            }
+        },
     
-    'Text parser with extra line at end': {
-        topic: parseText("\t1\t15\n"),
+        'with extra line in the middle': {
+            topic: parseText("1\t2\t35\n\n\t1\t20"),
 
-        'should ignore extra empty line': function(nodes) {
-            assert.equal (countNodes(nodes), 1);
-        }
-    },
-    
-    'Text parser with extra line in the middle': {
-        topic: parseText("1\t2\t35\n\n\t1\t20"),
-
-        'should ignore extra empty line': function(nodes) {
-            assert.equal (countNodes(nodes), 2);
+            'should ignore extra empty line': function(nodes) {
+                assert.equal (countNodes(nodes), 2);
+            }
         }
     }
 }).run();
