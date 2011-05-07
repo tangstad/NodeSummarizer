@@ -30,34 +30,44 @@ Tree.prototype.sum = function() {
     return total;
 };
 
+var makeNodes = function(lines) {
+    var list, id, value, parent, node, i;
+    var nodes = {};
+
+    for (i=0; i<lines.length; i++) {
+        if (lines[i] === "") {
+            continue;
+        }
+        list = lines[i].split("\t");
+        id = list[1];
+        value = list[2];
+        node = new Tree(value);
+        nodes[id] = node;
+    }
+    
+    return nodes;
+};
+
+var connectNodes = function(nodes, lines) {
+    var list, id, value, parent, node, i;
+    for (i=0; i<lines.length; i++) {
+        list = lines[i].split("\t");
+        parent = list[0];
+        id = list[1];
+        if (parent !== "") {
+            nodes[parent].addChild(nodes[id]);
+        }
+    }
+};
+
 // Create object of all nodes based on tab-delimited text
 var parseText = function(text) {
     var nodes = {};
 
     if (text !== "") {
         var lines = text.split("\n");
-        var list, id, value, parent, node, i;
-
-        for (i=0; i<lines.length; i++) {
-            if (lines[i] === "") {
-                continue;
-            }
-            list = lines[i].split("\t");
-            id = list[1];
-            value = list[2];
-            node = new Tree(value);
-            nodes[id] = node;
-        }
-        
-        // traverse again to connect parents
-        for (i=0; i<lines.length; i++) {
-            list = lines[i].split("\t");
-            parent = list[0];
-            id = list[1];
-            if (parent !== "") {
-                nodes[parent].addChild(nodes[id]);
-            }
-        }
+        nodes = makeNodes(lines);
+        connectNodes(nodes, lines);
     }
     
     return nodes;
