@@ -32,13 +32,11 @@ Tree.prototype.sum = function() {
 
 // Create object of all nodes based on tab-delimited text
 var parseText = function(text) {
-    if (text == "") {
-        return {};    
-    }
-    else {
+    var nodes = {};
+
+    if (text !== "") {
         var lines = text.split("\n");
         var list, id, value, parent, node;
-        var nodes = {};
         for (var i=0; i<lines.length; i++) {
             if (lines[i] === "") {
                 continue;
@@ -58,8 +56,9 @@ var parseText = function(text) {
                 nodes[parent].addChild(nodes[id]);
             }
         }
-        return nodes;
     }
+    
+    return nodes;
 };
 
 // export to node.js module
