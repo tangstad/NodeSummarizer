@@ -36,8 +36,9 @@ var parseText = function(text) {
 
     if (text !== "") {
         var lines = text.split("\n");
-        var list, id, value, parent, node;
-        for (var i=0; i<lines.length; i++) {
+        var list, id, value, parent, node, i;
+
+        for (i=0; i<lines.length; i++) {
             if (lines[i] === "") {
                 continue;
             }
@@ -45,10 +46,11 @@ var parseText = function(text) {
             id = list[1];
             value = list[2];
             node = new Tree(value);
-            nodes[id] = node;;
-        };
+            nodes[id] = node;
+        }
+        
         // traverse again to connect parents
-        for (var i=0; i<lines.length; i++) {
+        for (i=0; i<lines.length; i++) {
             list = lines[i].split("\t");
             parent = list[0];
             id = list[1];
