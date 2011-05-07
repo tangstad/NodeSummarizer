@@ -31,7 +31,7 @@ Tree.prototype.sum = function() {
 };
 
 var makeNodes = function(lines) {
-    var list, id, value, parent, node, i;
+    var list, id, value, i;
     var nodes = {};
 
     for (i=0; i<lines.length; i++) {
@@ -41,15 +41,15 @@ var makeNodes = function(lines) {
         list = lines[i].split("\t");
         id = list[1];
         value = list[2];
-        node = new Tree(value);
-        nodes[id] = node;
+        nodes[id] = new Tree(value);
     }
     
     return nodes;
 };
 
 var connectNodes = function(nodes, lines) {
-    var list, id, value, parent, node, i;
+    var list, id, parent, i;
+    
     for (i=0; i<lines.length; i++) {
         list = lines[i].split("\t");
         parent = list[0];
