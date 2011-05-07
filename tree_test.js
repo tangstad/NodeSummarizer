@@ -76,7 +76,7 @@ vows.describe('Node Summarizer').addBatch({
             'should have sum of self and all children': function(parent) {
                 assert.equal (parent.sum(), 10+20+30);
             }
-        },
+        }
     },
     
     'Text parser': {
@@ -84,12 +84,7 @@ vows.describe('Node Summarizer').addBatch({
             topic: parseText(""),
         
             'should give empty set of nodes': function(nodes) {
-                var length = 0;
-                var n;
-                for (n in nodes){ 
-                    length += 1;
-                }
-                assert.equal (length, 0);
+                assert.equal (countNodes(nodes), 0);
             }
         },
     
