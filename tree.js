@@ -2,6 +2,7 @@ var Tree = function (value, id) {
     this.value = value;
     this.id = id;
     this.children = [];
+    this.cached_sum = undefined;
 };
 
 Tree.prototype.getParent = function () {
@@ -31,18 +32,21 @@ Tree.prototype.addDetails = function(out, parent_id) {
     }
 };
 
-// Unless called from the root node, this can get pretty inefficient as it 
-// will recalculate all children at each call.
+// Since we recurse to get all values, the sum is calculated only once, then 
+// cached
 Tree.prototype.sum = function() {
     var total = this.value;
     var l = this.children.length;
     var i = 0;
     
-    for (; i<l; i++)
-    {
-        total += this.children[i].sum();
+    if (this.cached_sum === undefined) {    
+        for (; i<l; i++)
+        {
+            total += this.children[i].sum();
+        }
+        this.cached_sum = total;
     }
-    return total;
+    return this.cached_sum;
 };
 
 var makeNodes = function(lines) {
