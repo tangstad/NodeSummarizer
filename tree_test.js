@@ -126,26 +126,20 @@ vows.describe('Node Summarizer').addBatch({
         },
 
         'with parent and child nodes': {
-            topic: parseText("\t1\t20\n1\t2\t35"),
+            topic: getRoot(parseText("\t1\t20\n1\t2\t35")),
 
-            'should give two nodes': function(nodes) {
-                assert.equal (countNodes(nodes), 2);
-            },
-
-            'should give parent with child set': function(nodes) {
-                var parent = nodes['1'];
-                var child = nodes['2'];
-                assert.equal (parent.getChildren()[0], child);
+            'should give parent and child': function(root) {
+                var child = root.getChildren()[0];
+                assert.equal (child.value, 35);
             }
         },
 
         'with parent and child nodes in reverse order': {
-            topic: parseText("1\t2\t35\n\t1\t20"),
+            topic: getRoot(parseText("1\t2\t35\n\t1\t20")),
 
-            'should give parent with child set': function(nodes) {
-                var parent = nodes['1'];
-                var child = nodes['2'];
-                assert.equal (parent.getChildren()[0], child);
+            'should give parent with child set': function(root) {
+                var child = root.getChildren()[0];
+                assert.equal (child.value, 35);
             }
         },
         
