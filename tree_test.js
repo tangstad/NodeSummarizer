@@ -41,9 +41,9 @@ vows.describe('Node Summarizer').addBatch({
             },
             
             'should put own details in provided list': function(tree) {
-                var array = [];
-                tree.addDetails(array);
-                assert.deepEqual(array, [tree.to_s()]);
+                var out = [];
+                tree.addDetails(out);
+                assert.deepEqual(out, [tree.to_s()]);
             }
         },
             
