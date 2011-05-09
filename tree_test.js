@@ -123,6 +123,10 @@ vows.describe('Node Summarizer').addBatch({
                 var child = root.getChildren()[0];
                 assert.equal (child.value, 35);
                 assert.equal (child.id, 2);
+            },
+            
+            'should allow parent to calculate sum': function(root) {
+                assert.equal (root.sum(), 20+35);
             }
         },
 
