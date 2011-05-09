@@ -79,31 +79,39 @@ var connectNodes = function(nodes, lines) {
     }
 };
 
+var findRoot = function(nodes, lines) {
+    var list, id, parent, i;
+    
+    for (i=0; i<lines.length; i++) {
+        if (lines[i] === "") {
+            continue;
+        }
+        list = lines[i].split("\t");
+        parent = list[0];
+        id = list[1];
+        if (parent === "") {
+            return nodes[id];
+        }
+    }    
+};
+
 // Create object of all nodes based on tab-delimited text
 var parseText = function(text) {
     var nodes = {};
+    var root;
 
     if (text !== "") {
         var lines = text.split("\n");
         nodes = makeNodes(lines);
         connectNodes(nodes, lines);
+        root = findRoot(nodes, lines);
     }
     
-    return nodes;
-};
-
-var getRoot = function(obj) {
-    var key;
-    for (key in obj) {
-        if (obj.hasOwnProperty(key)) {
-            return obj[key];
-        }
-    }
+    return root;
 };
 
 // export to node.js module
 if(typeof(exports) !== 'undefined' && exports !== null) {
   exports.Tree = Tree;
   exports.parseText = parseText;
-  exports.getRoot = getRoot;
 }

@@ -4,7 +4,6 @@ var vows = require('vows'),
 var TreeModule = require('./tree');
 var Tree = TreeModule.Tree;
 var parseText = TreeModule.parseText;
-var getRoot = TreeModule.getRoot;
 
 var countNodes = function(nodes) {
     var length = 0;
@@ -110,7 +109,7 @@ vows.describe('Node Summarizer').addBatch({
     
     'Text parser': {
         'with empty string': {
-            topic: getRoot(parseText("")),
+            topic: parseText(""),
         
             'should give empty result': function(root) {
                 assert.isUndefined (root);
@@ -118,7 +117,7 @@ vows.describe('Node Summarizer').addBatch({
         },
     
         'with single root node': {
-            topic: getRoot(parseText("\t1\t15")),
+            topic: parseText("\t1\t15"),
         
             'should give node': function(root) {
                 assert.equal (root.value, 15);
@@ -126,7 +125,7 @@ vows.describe('Node Summarizer').addBatch({
         },
 
         'with parent and child nodes': {
-            topic: getRoot(parseText("\t1\t20\n1\t2\t35")),
+            topic: parseText("\t1\t20\n1\t2\t35"),
 
             'should give parent and child': function(root) {
                 var child = root.getChildren()[0];
@@ -134,8 +133,8 @@ vows.describe('Node Summarizer').addBatch({
             }
         },
 
-        'with parent and child nodes in reverse order': {
-            topic: getRoot(parseText("1\t2\t35\n\t1\t20")),
+        'with parent and child nodes in reverse order and id': {
+            topic: parseText("2\t1\t35\n\t2\t20"),
 
             'should give parent with child set': function(root) {
                 var child = root.getChildren()[0];
@@ -146,16 +145,18 @@ vows.describe('Node Summarizer').addBatch({
         'with extra line at end': {
             topic: parseText("\t1\t15\n"),
 
-            'should ignore extra empty line': function(nodes) {
-                assert.equal (countNodes(nodes), 1);
+            'should ignore extra empty line': function(root) {
+                assert.length (root.getChildren(), 0);
             }
         },
     
         'with extra line in the middle': {
             topic: parseText("1\t2\t35\n\n\t1\t20"),
 
-            'should ignore extra empty line': function(nodes) {
-                assert.equal (countNodes(nodes), 2);
+            'should ignore extra empty line': function(root) {
+                var child = root.getChildren()[0];
+                assert.length (root.getChildren(), 1);
+                assert.length (child.getChildren(), 0);
             }
         }
     }
