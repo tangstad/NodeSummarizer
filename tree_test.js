@@ -111,60 +111,52 @@ vows.describe('Node Summarizer').addBatch({
         'with empty string': {
             topic: parseText(""),
         
-            'should give empty set of nodes': function(nodes) {
-                assert.equal (countNodes(nodes), 0);
+            'should give empty result': function(root) {
+                assert.isUndefined (root);
             }
         },
     
         'with single root node': {
             topic: parseText("\t1\t15"),
         
-            'should give single node': function(nodes) {
-                assert.equal (countNodes(nodes), 1);
-            },
-
-            'should give node with value and id parsed': function(nodes) {
-                assert.equal (nodes['1'].value, 15);
+            'should give node': function(root) {
+                assert.equal (root.value, 15);
             }
         },
 
         'with parent and child nodes': {
             topic: parseText("\t1\t20\n1\t2\t35"),
 
-            'should give two nodes': function(nodes) {
-                assert.equal (countNodes(nodes), 2);
-            },
-
-            'should give parent with child set': function(nodes) {
-                var parent = nodes['1'];
-                var child = nodes['2'];
-                assert.equal (parent.getChildren()[0], child);
+            'should give parent and child': function(root) {
+                var child = root.getChildren()[0];
+                assert.equal (child.value, 35);
             }
         },
 
-        'with parent and child nodes in reverse order': {
-            topic: parseText("1\t2\t35\n\t1\t20"),
+        'with parent and child nodes in reverse order and id': {
+            topic: parseText("2\t1\t35\n\t2\t20"),
 
-            'should give parent with child set': function(nodes) {
-                var parent = nodes['1'];
-                var child = nodes['2'];
-                assert.equal (parent.getChildren()[0], child);
+            'should give parent with child set': function(root) {
+                var child = root.getChildren()[0];
+                assert.equal (child.value, 35);
             }
         },
         
         'with extra line at end': {
             topic: parseText("\t1\t15\n"),
 
-            'should ignore extra empty line': function(nodes) {
-                assert.equal (countNodes(nodes), 1);
+            'should ignore extra empty line': function(root) {
+                assert.length (root.getChildren(), 0);
             }
         },
     
         'with extra line in the middle': {
             topic: parseText("1\t2\t35\n\n\t1\t20"),
 
-            'should ignore extra empty line': function(nodes) {
-                assert.equal (countNodes(nodes), 2);
+            'should ignore extra empty line': function(root) {
+                var child = root.getChildren()[0];
+                assert.length (root.getChildren(), 1);
+                assert.length (child.getChildren(), 0);
             }
         }
     }
