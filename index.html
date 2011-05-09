@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>JavaScript Canvas Particles</title>
+    <script type="text/javascript" src="tree.js"></script>
+		<script type="text/javascript">
+			function summarize() {
+				var source = document.getElementById('source');
+				var target = document.getElementById('target');
+				var out = [];
+				var root = parseText(source.value);
+				root.addDetails(out);
+				target.value = out.join("\n");
+			}
+		</script>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+		<h1>Summarize data</h1>
+		<textarea id="source" rows="20" cols="80"></textarea>
+		<textarea id="target" rows="20" cols="80"></textarea>
+		<button type="button" onClick="summarize()">Summarize!</button>
+    <a id="hublink" href="https://github.com/tangstad/NodeSummarizer">Browse code on github</a>
+  </body>
+</html>

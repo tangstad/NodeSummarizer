@@ -1,0 +1,10 @@
+body {
+    font-family: Arial,Helvetica,sans-serif;
+    color: white;
+    background-color: #000000;
+    text-align: center;
+}
+#hublink {
+    color: #555;
+    font-size: 70%;
+}
