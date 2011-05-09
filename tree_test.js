@@ -4,15 +4,6 @@ var vows = require('vows'),
 var TreeModule = require('./tree');
 var Tree = TreeModule.Tree;
 var parseText = TreeModule.parseText;
-
-var countNodes = function(nodes) {
-    var length = 0;
-    var n;
-    for (n in nodes){
-        length += 1;
-    }
-    return length;
-};
     
 vows.describe('Node Summarizer').addBatch({
     'A tree node': {
