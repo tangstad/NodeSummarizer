@@ -53,7 +53,10 @@ var makeNodes = function(lines) {
         list = lines[i].split("\t");
         id = list[1];
         value = list[2];
-        nodes[id] = new Tree(parseInt(value, 10), id);
+        if (value) {
+            value = value.replace(",", ".");
+        }
+        nodes[id] = new Tree(parseFloat(value, 10), id);
     }
     
     return nodes;

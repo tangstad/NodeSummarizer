@@ -129,6 +129,22 @@ vows.describe('Node Summarizer').addBatch({
                 assert.equal (root.sum(), 20+35);
             }
         },
+        
+        'with period style decimal point in parent/child values': {
+            topic: parseText("\t1\t10.5\n1\t2\t11.5"),
+            
+            'should be able to sum values': function(root) {
+                assert.equal (root.sum(), 22);
+            }
+        },
+
+        'with comma style decimal point in parent/child values': {
+            topic: parseText("\t1\t10,5\n1\t2\t11,5"),
+            
+            'should be able to sum values': function(root) {
+                assert.equal (root.sum(), 22);
+            }
+        },
 
         'with parent and child nodes in reverse order and id': {
             topic: parseText("2\t1\t35\n\t2\t20"),
