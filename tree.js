@@ -16,6 +16,10 @@ Tree.prototype.getChildren = function() {
     return this.children;
 };
 
+Tree.prototype.to_s = function() {
+    return "\t" + this.id + "\t" + this.value + "\t" + this.sum();
+};
+
 // Unless called from the root node, this can get pretty inefficient as it 
 // will recalculate all children at each call.
 Tree.prototype.sum = function() {

@@ -33,6 +33,11 @@ vows.describe('Node Summarizer').addBatch({
         
             'should have sum same as own value': function(tree) {
                 assert.equal (tree.sum(), 125);
+            },
+            
+            'should output details as tab-delimited string': function(tree) {
+                // first element empty since no parent
+                assert.equal (tree.to_s(), "\t1\t125\t125");
             }
         },
     
