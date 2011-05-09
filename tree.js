@@ -16,8 +16,19 @@ Tree.prototype.getChildren = function() {
     return this.children;
 };
 
-Tree.prototype.to_s = function() {
-    return "\t" + this.id + "\t" + this.value + "\t" + this.sum();
+Tree.prototype.to_s = function(parent_id) {
+    if (parent_id !== undefined) {
+        return parent_id + "\t" + this.id + "\t" + this.value + "\t" + this.sum();
+    } else {
+        return "\t" + this.id + "\t" + this.value + "\t" + this.sum();
+    }
+};
+
+Tree.prototype.addDetails = function(out, parent_id) {
+    out.push(this.to_s(parent_id));
+    if (this.children.length > 0) {
+        this.children[0].addDetails(out, this.id);
+    }
 };
 
 // Unless called from the root node, this can get pretty inefficient as it 

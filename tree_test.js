@@ -35,12 +35,18 @@ vows.describe('Node Summarizer').addBatch({
                 assert.equal (tree.sum(), 125);
             },
             
-            'should output details as tab-delimited string': function(tree) {
+            'should have details as tab-delimited string': function(tree) {
                 // first element empty since no parent
                 assert.equal (tree.to_s(), "\t1\t125\t125");
+            },
+            
+            'should put own details in provided list': function(tree) {
+                var array = [];
+                tree.addDetails(array);
+                assert.deepEqual(array, [tree.to_s()]);
             }
         },
-    
+            
         'when made with different id': {
             topic: new Tree(125, 25),
         
@@ -65,6 +71,12 @@ vows.describe('Node Summarizer').addBatch({
         
             'should have sum of values self and child': function(parent) {
                 assert.equal (parent.sum(), 10+20);
+            },
+            
+            'should put details of self and child in list': function(parent) {
+                var out = [];
+                parent.addDetails(out);
+                assert.deepEqual(out, ["\t1\t20\t30", "1\t2\t10\t10"]);
             }
         },
     
