@@ -25,9 +25,12 @@ Tree.prototype.to_s = function(parent_id) {
 };
 
 Tree.prototype.addDetails = function(out, parent_id) {
+    var len = this.children.length;
+    var i;
+
     out.push(this.to_s(parent_id));
-    if (this.children.length > 0) {
-        this.children[0].addDetails(out, this.id);
+    for (i=0; i<len; i++) {
+        this.children[i].addDetails(out, this.id);
     }
 };
 

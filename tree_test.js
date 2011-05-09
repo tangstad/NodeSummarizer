@@ -82,9 +82,9 @@ vows.describe('Node Summarizer').addBatch({
     
         'when it has multiple children': {
             topic: function() {
-                var child1 = new Tree(10);
-                var child2 = new Tree(20);
-                var parent = new Tree(30);
+                var child1 = new Tree(10, 11);
+                var child2 = new Tree(20, 12);
+                var parent = new Tree(30, 10);
                 parent.addChild(child1);
                 parent.addChild(child2);
                 return parent;
@@ -92,6 +92,12 @@ vows.describe('Node Summarizer').addBatch({
         
             'should have sum of self and all children': function(parent) {
                 assert.equal (parent.sum(), 10+20+30);
+            },
+            
+            'should put details of self and all children in list': function(parent) {
+                var out = [];
+                parent.addDetails(out);
+                assert.deepEqual(out, ["\t10\t30\t60", "10\t11\t10\t10", "10\t12\t20\t20"]);
             }
         }
     },
