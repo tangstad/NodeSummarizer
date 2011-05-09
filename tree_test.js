@@ -118,14 +118,10 @@ vows.describe('Node Summarizer').addBatch({
         },
     
         'with single root node': {
-            topic: parseText("\t1\t15"),
+            topic: getRoot(parseText("\t1\t15")),
         
-            'should give single node': function(nodes) {
-                assert.equal (countNodes(nodes), 1);
-            },
-
-            'should give node with value and id parsed': function(nodes) {
-                assert.equal (nodes['1'].value, 15);
+            'should give node': function(root) {
+                assert.equal (root.value, 15);
             }
         },
 

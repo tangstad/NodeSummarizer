@@ -93,6 +93,12 @@ var parseText = function(text) {
 };
 
 var getRoot = function(obj) {
+    var key;
+    for (key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            return obj[key];
+        }
+    }
 };
 
 // export to node.js module
