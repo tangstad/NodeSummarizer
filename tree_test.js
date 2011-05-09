@@ -121,6 +121,7 @@ vows.describe('Node Summarizer').addBatch({
         
             'should give node': function(root) {
                 assert.equal (root.value, 15);
+                assert.equal (root.id, 1);
             }
         },
 
@@ -130,6 +131,7 @@ vows.describe('Node Summarizer').addBatch({
             'should give parent and child': function(root) {
                 var child = root.getChildren()[0];
                 assert.equal (child.value, 35);
+                assert.equal (child.id, 2);
             }
         },
 

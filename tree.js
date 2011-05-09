@@ -53,7 +53,7 @@ var makeNodes = function(lines) {
         list = lines[i].split("\t");
         id = list[1];
         value = list[2];
-        nodes[id] = new Tree(value);
+        nodes[id] = new Tree(value, id);
     }
     
     return nodes;
