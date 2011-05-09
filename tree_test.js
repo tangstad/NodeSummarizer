@@ -27,8 +27,8 @@ vows.describe('Node Summarizer').addBatch({
                 assert.equal (tree.id, 1);
             },
         
-            'should have no parent': function(tree) {
-                assert.isUndefined (tree.getParent());
+            'should have no children': function(tree) {
+                assert.length (tree.getChildren(), 0);
             },
         
             'should have sum same as own value': function(tree) {

@@ -5,10 +5,6 @@ var Tree = function (value, id) {
     this.cached_sum = undefined;
 };
 
-Tree.prototype.getParent = function () {
-    return undefined;
-};
-
 Tree.prototype.addChild = function(child) {
     this.children.push(child);
 };
