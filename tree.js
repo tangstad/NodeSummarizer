@@ -17,11 +17,8 @@ Tree.prototype.getChildren = function() {
 };
 
 Tree.prototype.to_s = function(parent_id) {
-    if (parent_id !== undefined) {
-        return parent_id + "\t" + this.id + "\t" + this.value + "\t" + this.sum();
-    } else {
-        return "\t" + this.id + "\t" + this.value + "\t" + this.sum();
-    }
+    parent_id = parent_id || "";
+    return parent_id + "\t" + this.id + "\t" + this.value + "\t" + this.sum();
 };
 
 Tree.prototype.addDetails = function(out, parent_id) {
