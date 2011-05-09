@@ -4,6 +4,7 @@ var vows = require('vows'),
 var TreeModule = require('./tree');
 var Tree = TreeModule.Tree;
 var parseText = TreeModule.parseText;
+var getRoot = TreeModule.getRoot;
 
 var countNodes = function(nodes) {
     var length = 0;
@@ -109,10 +110,10 @@ vows.describe('Node Summarizer').addBatch({
     
     'Text parser': {
         'with empty string': {
-            topic: parseText(""),
+            topic: getRoot(parseText("")),
         
-            'should give empty set of nodes': function(nodes) {
-                assert.equal (countNodes(nodes), 0);
+            'should give empty result': function(root) {
+                assert.isUndefined (root);
             }
         },
     

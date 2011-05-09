@@ -92,8 +92,12 @@ var parseText = function(text) {
     return nodes;
 };
 
+var getRoot = function(obj) {
+};
+
 // export to node.js module
 if(typeof(exports) !== 'undefined' && exports !== null) {
   exports.Tree = Tree;
   exports.parseText = parseText;
+  exports.getRoot = getRoot;
 }
