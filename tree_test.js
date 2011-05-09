@@ -76,7 +76,9 @@ vows.describe('Node Summarizer').addBatch({
             'should put details of self and child in list': function(parent) {
                 var out = [];
                 parent.addDetails(out);
-                assert.deepEqual(out, ["\t1\t20\t30", "1\t2\t10\t10"]);
+                assert.length (out, 2);
+                assert.include (out, "1\t2\t10\t10");
+                assert.include (out, "\t1\t20\t30");
             }
         },
     
@@ -97,7 +99,10 @@ vows.describe('Node Summarizer').addBatch({
             'should put details of self and all children in list': function(parent) {
                 var out = [];
                 parent.addDetails(out);
-                assert.deepEqual(out, ["\t10\t30\t60", "10\t11\t10\t10", "10\t12\t20\t20"]);
+                assert.length (out, 3);
+                assert.include (out, "\t10\t30\t60");
+                assert.include (out, "10\t11\t10\t10");
+                assert.include (out, "10\t12\t20\t20");
             }
         }
     },
