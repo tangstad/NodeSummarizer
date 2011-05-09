@@ -54,9 +54,6 @@ var makeNodes = function(lines) {
     var nodes = {};
 
     for (i=0; i<lines.length; i++) {
-        if (lines[i] === "") {
-            continue;
-        }
         list = lines[i].split("\t");
         id = list[1];
         value = list[2];
@@ -98,16 +95,10 @@ var findRoot = function(nodes, lines) {
 // Create object of all nodes based on tab-delimited text
 var parseText = function(text) {
     var nodes = {};
-    var root;
-
-    if (text !== "") {
-        var lines = text.split("\n");
-        nodes = makeNodes(lines);
-        connectNodes(nodes, lines);
-        root = findRoot(nodes, lines);
-    }
-    
-    return root;
+    var lines = text.split("\n");
+    nodes = makeNodes(lines);
+    connectNodes(nodes, lines);
+    return findRoot(nodes, lines);
 };
 
 // export to node.js module
