@@ -13,9 +13,15 @@ Tree.prototype.getChildren = function() {
     return this.children;
 };
 
+// turn value into string with comma as decimal point
+var commafy = function(value) {
+    var s = "" + value;
+    return s.replace(".", ",");
+}
+
 Tree.prototype.to_s = function(parent_id) {
     parent_id = parent_id || "";
-    return parent_id + "\t" + this.id + "\t" + this.value + "\t" + this.sum();
+    return parent_id + "\t" + this.id + "\t" + commafy(this.value) + "\t" + commafy(this.sum());
 };
 
 Tree.prototype.addDetails = function(out, parent_id) {
