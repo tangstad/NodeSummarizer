@@ -114,6 +114,14 @@ vows.describe('Node Summarizer').addBatch({
                 assert.isUndefined (root);
             }
         },
+
+        'with header containing no numbers': {
+            topic: parseText("some\theader\ttext"),
+
+            'should ignore and return empty result': function(root) {
+                assert.isUndefined (root);
+            }
+        },
     
         'with single root node': {
             topic: parseText("\t1\t15"),
