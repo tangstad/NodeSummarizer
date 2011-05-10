@@ -112,8 +112,14 @@ var parseText = function(text) {
     return findRoot(nodes, lines);
 };
 
+// main function, add row of sums to table of nodes
+var addSumsToTable = function(table) {
+    return "";
+};
+
 // export to node.js module
 if(typeof(exports) !== 'undefined' && exports !== null) {
   exports.Tree = Tree;
   exports.parseText = parseText;
+  exports.addSumsToTable = addSumsToTable;
 }
