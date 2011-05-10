@@ -69,12 +69,18 @@ var makeNodes = function(lines) {
 };
 
 var connectNodes = function(nodes, lines) {
-    var list, id, parent, i;
+    var list, id, parent, i, value;
     
     for (i=0; i<lines.length; i++) {
         list = lines[i].split("\t");
         parent = list[0];
         id = list[1];
+        if (i === 0) {
+            value = list[2];
+            if (isNaN(parseInt(value, 10))) {
+                continue;
+            }
+        }
         if (parent !== "") {
             nodes[parent].addChild(nodes[id]);
         }
