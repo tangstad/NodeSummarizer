@@ -30,13 +30,21 @@ vows.describe('Node Summarizer').addBatch({
                 // first element empty since no parent
                 assert.equal (tree.to_s(), "\t1\t125\t125");
             },
-            
+
             'should put own details in provided list': function(tree) {
                 var out = [];
                 tree.addDetails(out);
                 assert.deepEqual(out, [tree.to_s()]);
             }
         },
+
+	'when it has decimal in value': {
+	    topic: new Tree(120.5, 1),
+
+	    'should use comma as decimal delimiter when converting to string': function(tree) {
+		assert.equal (tree.to_s(), "\t1\t120,5\t120,5");
+	    },
+	},
             
         'when made with different id': {
             topic: new Tree(125, 25),
