@@ -119,7 +119,7 @@ var addSumsToTable = function(table) {
 
     if (root !== undefined) {
         root.addDetails(out);
-        return out[0];
+        return out.join("\n");
     } else {
         return "";
     }
