@@ -38,13 +38,13 @@ vows.describe('Node Summarizer').addBatch({
             }
         },
 
-	'when it has decimal in value': {
-	    topic: new Tree(120.5, 1),
+        'when it has decimal in value': {
+            topic: new Tree(120.5, 1),
 
-	    'should use comma as decimal delimiter when converting to string': function(tree) {
-		assert.equal (tree.to_s(), "\t1\t120,5\t120,5");
-	    },
-	},
+            'should use comma as decimal delimiter when converting to string': function(tree) {
+                assert.equal (tree.to_s(), "\t1\t120,5\t120,5");
+            },
+        },
             
         'when made with different id': {
             topic: new Tree(125, 25),
