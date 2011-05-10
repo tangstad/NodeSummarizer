@@ -12,6 +12,14 @@ vows.describe('Node Summarizer').addBatch({
             'should output empty string': function (data) {
                 assert.equal(data, "");
             }
+        },
+
+        'when we have a single row with integer value': {
+            topic: addSumsToTable("\troot\t10"),
+
+            'should add value as sum of self': function (data) {
+                assert.equal(data, "\troot\t10\t10");
+            }
         }
     }
 }).run();

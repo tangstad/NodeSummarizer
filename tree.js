@@ -114,7 +114,15 @@ var parseText = function(text) {
 
 // main function, add row of sums to table of nodes
 var addSumsToTable = function(table) {
-    return "";
+    var root = parseText(table);
+    var out = [];
+
+    if (root !== undefined) {
+        root.addDetails(out);
+        return out[0];
+    } else {
+        return "";
+    }
 };
 
 // export to node.js module
