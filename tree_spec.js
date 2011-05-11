@@ -47,7 +47,10 @@ vows.describe('Node Summarizer').addBatch({
             topic: addSumsToTable(makeTable(["root child 15",
                                              " root 10"])),
 
-            'add sum to both rows, keeping order': 'pending'
+            'add sum to both rows, keeping order': function (data) {
+                assert.equal(data, makeTable(["root child 15 15",
+                                              " root 10 25"]));
+            }
         }
     }
 }).run();

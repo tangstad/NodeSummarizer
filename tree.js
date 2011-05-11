@@ -132,14 +132,26 @@ var parseText = function (text) {
 // main function, add row of sums to table of nodes
 var addSumsToTable = function (table) {
     var root = parseText(table);
-    var out = [];
-
-    if (root !== undefined) {
-        root.addDetails(out);
-        return out.join("\n");
-    } else {
+    if (root === undefined) {
         return "";
     }
+
+    var nodes = root.getNodes();
+    var out = [];
+    var i, data, parent, id, value, sum;
+
+    var lines = table.split("\n");
+
+    for (i=0; i<lines.length; i++) {
+        data = lines[i].split("\t");
+        parent = data[0];
+        id = data[1];
+        value = data[2];
+        sum = nodes[id].sum();
+
+        out.push([parent, id, value, sum].join("\t"));
+    }
+    return out.join("\n");
 };
 
 // export to node.js module
