@@ -36,8 +36,15 @@ vows.describe('Node Summarizer').addBatch({
                 assert.deepEqual(out, [tree.to_s()]);
             },
 
-            'should give hash with self keyed with id when asked for all nodes': function (tree) {
-                assert.deepEqual(tree.getNodes(), { 1: tree });
+            'and asked for list of all nodes': {
+                topic: function (tree) {
+                    return { nodes: tree.getNodes(),
+                             tree: tree };
+                },
+
+                'should return itself, keyed with id': function (topic) {
+                    assert.deepEqual(topic.nodes, { 1: topic.tree });
+                }
             }
         },
 
@@ -83,9 +90,17 @@ vows.describe('Node Summarizer').addBatch({
                 assert.include(out, "\t1\t20\t30");
             },
 
-            'should give hash with self, child when asked for all nodes': function (parent) {
-                var child = parent.getChildren()[0];
-                assert.deepEqual(parent.getNodes(), { 1: parent, 2: child });
+            'and asked for list of all nodes': {
+                topic: function (parent) {
+                    return { nodes: parent.getNodes(),
+                             parent: parent };
+                },
+
+                'should return itself, keyed with id': function (topic) {
+                    var child = topic.parent.getChildren()[0];
+                    assert.deepEqual(topic.nodes, { 1: topic.parent,
+                                                    2: child });
+                }
             }
         },
     
