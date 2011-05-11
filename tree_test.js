@@ -14,7 +14,7 @@ vows.describe('Node Summarizer').addBatch({
                 assert.equal(tree.value, 125);
             },
         
-            'should have id set': function (tree) {
+            'should have an id': function (tree) {
                 assert.equal(tree.id, 1);
             },
         
@@ -22,16 +22,15 @@ vows.describe('Node Summarizer').addBatch({
                 assert.length(tree.getChildren(), 0);
             },
         
-            'should have sum same as own value': function (tree) {
+            'should have the same sub-tree sum as its own value': function (tree) {
                 assert.equal(tree.sum(), 125);
             },
             
-            'should have details as tab-delimited string': function (tree) {
-                // first element empty since no parent
+            'should have id, value and sum as string representation': function (tree) {
                 assert.equal(tree.to_s(), "\t1\t125\t125");
             },
 
-            'should put own details in provided list': function (tree) {
+            'should output own details to list': function (tree) {
                 var out = [];
                 tree.addDetails(out);
                 assert.deepEqual(out, [tree.to_s()]);
@@ -42,10 +41,10 @@ vows.describe('Node Summarizer').addBatch({
             }
         },
 
-        'when it has decimal in value': {
+        'when it has a decimal value': {
             topic: new Tree(120.5, 1),
 
-            'should use comma as decimal delimiter when converting to string': function (tree) {
+            'should use comma as decimal delimiter in value and sum in string representation': function (tree) {
                 assert.equal(tree.to_s(), "\t1\t120,5\t120,5");
             },
         },
@@ -72,7 +71,7 @@ vows.describe('Node Summarizer').addBatch({
                 assert.equal(list[0].value, 10);
             },
         
-            'should have sum of values self and child': function (parent) {
+            'should calculate sum from values of self and child': function (parent) {
                 assert.equal(parent.sum(), 10+20);
             },
             
@@ -100,7 +99,7 @@ vows.describe('Node Summarizer').addBatch({
                 return parent;
             },
         
-            'should have sum of self and all children': function (parent) {
+            'should calculate sum from self and all children': function (parent) {
                 assert.equal(parent.sum(), 10+20+30);
             },
             
@@ -127,7 +126,7 @@ vows.describe('Node Summarizer').addBatch({
         'with header containing no numbers': {
             topic: parseText("some\theader\ttext"),
 
-            'should ignore and return empty result': function (root) {
+            'should ignore header and return empty result': function (root) {
                 assert.isUndefined(root);
             }
         },
@@ -135,7 +134,7 @@ vows.describe('Node Summarizer').addBatch({
         'with single root node': {
             topic: parseText("\t1\t15"),
         
-            'should give node': function (root) {
+            'should return node': function (root) {
                 assert.equal(root.value, 15);
                 assert.equal(root.id, 1);
             }
@@ -144,7 +143,7 @@ vows.describe('Node Summarizer').addBatch({
         'with parent and child nodes': {
             topic: parseText("\t1\t20\n1\t2\t35"),
 
-            'should give parent and child': function (root) {
+            'should give parent with child added': function (root) {
                 var child = root.getChildren()[0];
                 assert.equal(child.value, 35);
                 assert.equal(child.id, 2);
@@ -158,7 +157,7 @@ vows.describe('Node Summarizer').addBatch({
         'with period style decimal point in parent/child values': {
             topic: parseText("\t1\t10.5\n1\t2\t11.5"),
             
-            'should be able to sum values': function (root) {
+            'should be able to calculate sum': function (root) {
                 assert.equal(root.sum(), 22);
             }
         },
@@ -166,7 +165,7 @@ vows.describe('Node Summarizer').addBatch({
         'with comma style decimal point in parent/child values': {
             topic: parseText("\t1\t10,5\n1\t2\t11,5"),
             
-            'should be able to sum values': function (root) {
+            'should be able to calculate sum': function (root) {
                 assert.equal(root.sum(), 22);
             }
         },
@@ -174,7 +173,7 @@ vows.describe('Node Summarizer').addBatch({
         'with parent and child nodes in reverse order and id': {
             topic: parseText("2\t1\t35\n\t2\t20"),
 
-            'should give parent with child set': function (root) {
+            'should still give parent with child set': function (root) {
                 var child = root.getChildren()[0];
                 assert.equal(child.value, 35);
             }
