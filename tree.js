@@ -13,6 +13,22 @@ Tree.prototype.getChildren = function() {
     return this.children;
 };
 
+// get hash of all nodes
+Tree.prototype.getNodes = function () {
+    var hash = {};
+    var key;
+    var nodes;
+
+    hash[this.id] = this;
+    if (this.children[0]) {
+        nodes = this.children[0].getNodes();
+        for (key in nodes) {
+            hash[key] = nodes[key];
+        }
+    }
+    return hash;
+};
+
 // turn value into string with comma as decimal point
 var commafy = function(value) {
     var s = "" + value;

@@ -35,6 +35,10 @@ vows.describe('Node Summarizer').addBatch({
                 var out = [];
                 tree.addDetails(out);
                 assert.deepEqual(out, [tree.to_s()]);
+            },
+
+            'should give hash with self keyed with id when asked for all nodes': function(tree) {
+                assert.deepEqual(tree.getNodes(), { 1: tree });
             }
         },
 
@@ -78,6 +82,11 @@ vows.describe('Node Summarizer').addBatch({
                 assert.length (out, 2);
                 assert.include (out, "1\t2\t10\t10");
                 assert.include (out, "\t1\t20\t30");
+            },
+
+            'should give hash with self, child when asked for all nodes': function (parent) {
+                var child = parent.getChildren()[0];
+                assert.deepEqual(parent.getNodes(), { 1: parent, 2: child });
             }
         },
     

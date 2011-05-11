@@ -41,6 +41,13 @@ vows.describe('Node Summarizer').addBatch({
                 assert.equal(data, makeTable([" root 10 25",
                                               "root child 15 15"]));
             }
+        },
+
+        'when we have two rows with child first': {
+            topic: addSumsToTable(makeTable(["root child 15",
+                                             " root 10"])),
+
+            'add sum to both rows, keeping order': 'pending'
         }
     }
 }).run();
