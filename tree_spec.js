@@ -3,6 +3,17 @@ var vows = require('vows'),
 
 var TreeModule = require('./tree');
 var addSumsToTable = TreeModule.addSumsToTable;
+
+// utility function to make a table slightly more readable than a tab-delimited list
+var makeTable = function (lines) {
+    var out = [];
+    var i;
+
+    for (i=0; i<lines.length; i++) {
+        out.push(lines[i].replace(/ /g, "\t"));
+    }
+    return out.join("\n");
+};
     
 vows.describe('Node Summarizer').addBatch({
     'Calculating sub-tree sums': {
@@ -15,24 +26,20 @@ vows.describe('Node Summarizer').addBatch({
         },
 
         'when we have a single row with integer value': {
-            topic: addSumsToTable("\troot\t10"),
+            topic: addSumsToTable(makeTable([" root 10"])),
 
             'should add value as sum of self': function (data) {
-                assert.equal(data, "\troot\t10\t10");
+                assert.equal(data, makeTable([" root 10 10"]));
             }
         },
 
         'when we have two rows with integer values': {
-            topic: addSumsToTable("\troot\t10\nroot\tchild\t15"),
+            topic: addSumsToTable(makeTable([" root 10",
+                                             "root child 15"])),
 
-            'add sum of both rows to parent': function (data) {
-                var parentRow = data.split("\n", 1);
-                assert.equal(parentRow, "\troot\t10\t25");
-            },
-
-            'child should have own value as sum': function (data) {
-                var childRow = data.split("\n")[1];
-                assert.equal(childRow, "root\tchild\t15\t15");
+            'add sum to both rows to parent': function (data) {
+                assert.equal(data, makeTable([" root 10 25",
+                                              "root child 15 15"]));
             }
         }
     }
