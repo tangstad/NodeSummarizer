@@ -18,10 +18,11 @@ Tree.prototype.getNodes = function () {
     var hash = {};
     var key;
     var nodes;
+    var i;
 
     hash[this.id] = this;
-    if (this.children[0]) {
-        nodes = this.children[0].getNodes();
+    for (i=0; i<this.children.length; i++) {
+        nodes = this.children[i].getNodes();
         for (key in nodes) {
             hash[key] = nodes[key];
         }

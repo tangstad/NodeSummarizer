@@ -125,6 +125,21 @@ vows.describe('Node Summarizer').addBatch({
                 assert.include(out, "\t10\t30\t60");
                 assert.include(out, "10\t11\t10\t10");
                 assert.include(out, "10\t12\t20\t20");
+            },
+
+            'and asked for list of all nodes': {
+                topic: function (parent) {
+                    return { nodes: parent.getNodes(),
+                             parent: parent };
+                },
+
+                'should return itself, keyed with id': function (topic) {
+                    var child1 = topic.parent.getChildren()[0];
+                    var child2 = topic.parent.getChildren()[1];
+                    assert.deepEqual(topic.nodes, { 10: topic.parent,
+                                                    11: child1,
+                                                    12: child2 });
+                }
             }
         }
     },
