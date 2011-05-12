@@ -38,16 +38,15 @@ Tree.prototype.sum = function () {
 
 var textTo2dArray = function (textTable) {
     var lines = textTable.split("\n");
-    var id, i, row;
+    var i, row;
     var length = lines.length;
     var data = [];
 
     for (i=0; i<length; i++) {
-        row = lines[i].split("\t");
-        id = row[1];
-        if (id === undefined) {
+        if (lines[i] == "") {
             continue;
         }
+        row = lines[i].split("\t");
         data.push(row);
     }
     return data;
