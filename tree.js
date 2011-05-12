@@ -153,14 +153,14 @@ var parseText = function (text) {
 
 // main function, add row of sums to table of nodes
 var addSumsToTable = function (tableText) {
-    if (tableText === "") {
-        return { output: "" };
-    }
     var table = new Table(tableText);
     var nodes = table.makeNodes();
     var out = [];
 
     table.eachLine(function(parent, id, value) {
+        if (id === undefined) {
+            return;
+        }
         var sum = commafy(nodes[id].sum());
         out.push([parent, id, value, sum].join("\t"));
     });
