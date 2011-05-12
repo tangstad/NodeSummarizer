@@ -123,20 +123,14 @@ var connectNodes = function (nodes, table) {
     });
 };
 
-var findRoot = function (nodes, lines) {
-    var list, id, parent, i;
-    
-    for (i=0; i<lines.length; i++) {
-        if (lines[i] === "") {
-            continue;
+var findRoot = function (nodes, table) {
+    var root;
+    table.eachLine(function (parent, id, value) {
+        if (id !== undefined && parent === "") {
+            root = nodes[id];
         }
-        list = lines[i].split("\t");
-        parent = list[0];
-        id = list[1];
-        if (parent === "") {
-            return nodes[id];
-        }
-    }    
+    });
+    return root;
 };
 
 var parseText = function (text) {
@@ -145,7 +139,7 @@ var parseText = function (text) {
     var table = new Table(text);
     nodes = makeNodes(table);
     connectNodes(nodes, table);
-    return findRoot(nodes, lines);
+    return findRoot(nodes, table);
 };
 
 // main function, add row of sums to table of nodes
