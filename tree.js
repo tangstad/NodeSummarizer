@@ -40,28 +40,28 @@ var textTo2dArray = function (textTable) {
     var lines = textTable.split("\n");
     var i, row;
     var length = lines.length;
-    var data = [];
+    var rows = [];
 
     for (i=0; i<length; i++) {
         if (lines[i] == "") {
             continue;
         }
         row = lines[i].split("\t");
-        data.push(row);
+        rows.push(row);
     }
-    return data;
+    return rows;
 };
 
 var Table = function (textTable) {
-    this.data = textTo2dArray(textTable);
-    this.length = this.data.length;
+    this.rows = textTo2dArray(textTable);
+    this.length = this.rows.length;
 };
 
 Table.prototype.eachLine = function (f) {
     var line, parent, id, value, i;
 
     for (i=0; i<this.length; i++) {
-        line = this.data[i];
+        line = this.rows[i];
 
         parent = line[0];
         id = line[1];
@@ -75,7 +75,7 @@ Table.prototype.findRoot = function (nodes) {
     var line, parent, id, value, i;
 
     for (i=0; i<this.length; i++) {
-        line = this.data[i];
+        line = this.rows[i];
 
         parent = line[0];
         id = line[1];
