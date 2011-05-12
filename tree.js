@@ -110,7 +110,7 @@ Table.prototype.findRoot = function (nodes) {
     }
 }
 
-var makeNodes = function (table) {
+Table.prototype.makeNodes = function () {
     var nodes = {};
     var firstLine = true;
 
@@ -133,8 +133,8 @@ var makeNodes = function (table) {
         }
     };
 
-    table.eachLine(addNode);
-    table.eachLine(addToParent);
+    this.eachLine(addNode);
+    this.eachLine(addToParent);
 
     return nodes;
 };
@@ -143,7 +143,7 @@ var parseText = function (text) {
     var nodes;
     var table = new Table(text);
 
-    nodes = makeNodes(table);
+    nodes = table.makeNodes();
 
     return table.findRoot(nodes);
 };
@@ -154,7 +154,7 @@ var addSumsToTable = function (tableText) {
         return { output: "" };
     }
     var table = new Table(tableText);
-    var nodes = makeNodes(table);
+    var nodes = table.makeNodes();
     var out = [];
 
     table.eachLine(function(parent, id, value) {
