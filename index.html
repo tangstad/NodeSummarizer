@@ -7,10 +7,7 @@
 			function summarize() {
 				var source = document.getElementById('source');
 				var target = document.getElementById('target');
-				var out = [];
-				var root = parseText(source.value);
-				root.addDetails(out);
-				target.value = out.join("\n");
+				target.value = addSumsToTable(source.value).output;
 			}
 		</script>
     <link rel="stylesheet" type="text/css" href="style.css" />
