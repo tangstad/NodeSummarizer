@@ -5,38 +5,23 @@ var Tree = function (value, id) {
     this.cached_sum = undefined;
 };
 
-Tree.prototype.addChild = function(child) {
+Tree.prototype.addChild = function (child) {
     this.children.push(child);
 };
 
-Tree.prototype.getChildren = function() {
+Tree.prototype.getChildren = function () {
     return this.children;
 };
 
 // turn value into string with comma as decimal point
-var commafy = function(value) {
+var commafy = function (value) {
     var s = "" + value;
     return s.replace(".", ",");
 }
 
-Tree.prototype.to_s = function(parent_id) {
-    parent_id = parent_id || "";
-    return parent_id + "\t" + this.id + "\t" + commafy(this.value) + "\t" + commafy(this.sum());
-};
-
-Tree.prototype.addDetails = function(out, parent_id) {
-    var len = this.children.length;
-    var i;
-
-    out.push(this.to_s(parent_id));
-    for (i=0; i<len; i++) {
-        this.children[i].addDetails(out, this.id);
-    }
-};
-
 // Since we recurse to get all values, the sum is calculated only once, then 
 // cached
-Tree.prototype.sum = function() {
+Tree.prototype.sum = function () {
     var total = this.value;
     var l = this.children.length;
     var i = 0;
@@ -51,69 +36,95 @@ Tree.prototype.sum = function() {
     return this.cached_sum;
 };
 
-var makeNodes = function(lines) {
-    var list, id, value, i;
-    var nodes = {};
+var textTo2dArray = function (textTable) {
+    var lines = textTable.split("\n");
+    var rows = [];
+    var row;
 
-    for (i=0; i<lines.length; i++) {
-        list = lines[i].split("\t");
-        id = list[1];
-        value = list[2];
+    var isNumber = function (s) {
+        s = s.replace(",", ".");
+        return (s - 0) == s && s.length > 0;
+    };
+
+    var validLine = function(line) {
+        var id = line.split("\t")[2];
+        return line && isNumber(id);
+    };
+
+    for (var i=0, length=lines.length; i<length; i++) {
+        if (validLine(lines[i])) {
+            row = lines[i].split("\t");
+            rows.push(row);
+        }
+    }
+    return rows;
+};
+
+var Table = function (textTable) {
+    this.rows = textTo2dArray(textTable);
+    this.length = this.rows.length;
+};
+
+Table.prototype.eachLine = function (f) {
+    var line, parent, id, value, i;
+
+    for (i=0; i<this.length; i++) {
+        line = this.rows[i];
+
+        parent = line[0];
+        id = line[1];
+        value = line[2];
+
+        f(parent, id, value);
+    }
+};
+
+Table.prototype.makeNodes = function () {
+    var nodes = {};
+    var firstLine = true;
+
+    var addNode = function (parent, id, value) {
         if (value) {
             value = value.replace(",", ".");
         }
         nodes[id] = new Tree(parseFloat(value, 10), id);
-    }
-    
-    return nodes;
-};
+    };
 
-var connectNodes = function(nodes, lines) {
-    var list, id, parent, i, value;
-    
-    for (i=0; i<lines.length; i++) {
-        list = lines[i].split("\t");
-        parent = list[0];
-        id = list[1];
-        if (i === 0) {
-            value = list[2];
+    var addToParent = function (parent, id, value) {
+        if (firstLine) {
+            firstLine = false;
             if (isNaN(parseInt(value, 10))) {
-                continue;
+                return;
             }
         }
         if (parent !== "") {
             nodes[parent].addChild(nodes[id]);
         }
-    }
+    };
+
+    this.eachLine(addNode);
+    this.eachLine(addToParent);
+
+    return nodes;
 };
 
-var findRoot = function(nodes, lines) {
-    var list, id, parent, i;
-    
-    for (i=0; i<lines.length; i++) {
-        if (lines[i] === "") {
-            continue;
-        }
-        list = lines[i].split("\t");
-        parent = list[0];
-        id = list[1];
-        if (parent === "") {
-            return nodes[id];
-        }
-    }    
-};
+// main function, add row of sums to table of nodes
+var addSumsToTable = function (tableText) {
+    var table = new Table(tableText);
+    var nodes = table.makeNodes();
+    var out = [];
 
-// Create object of all nodes based on tab-delimited text
-var parseText = function(text) {
-    var nodes = {};
-    var lines = text.split("\n");
-    nodes = makeNodes(lines);
-    connectNodes(nodes, lines);
-    return findRoot(nodes, lines);
+    table.eachLine(function(parent, id, value) {
+        var sum = commafy(nodes[id].sum());
+        out.push([parent, id, value, sum].join("\t"));
+    });
+
+    return { output: out.join("\n") };
 };
 
 // export to node.js module
 if(typeof(exports) !== 'undefined' && exports !== null) {
   exports.Tree = Tree;
-  exports.parseText = parseText;
+  exports.Table = Table;
+  exports.addSumsToTable = addSumsToTable;
 }
