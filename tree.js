@@ -124,15 +124,6 @@ Table.prototype.makeNodes = function () {
     return nodes;
 };
 
-var parseText = function (text) {
-    var nodes;
-    var table = new Table(text);
-
-    nodes = table.makeNodes();
-
-    return table.findRoot(nodes);
-};
-
 // main function, add row of sums to table of nodes
 var addSumsToTable = function (tableText) {
     var table = new Table(tableText);
@@ -151,6 +142,5 @@ var addSumsToTable = function (tableText) {
 if(typeof(exports) !== 'undefined' && exports !== null) {
   exports.Tree = Tree;
   exports.Table = Table;
-  exports.parseText = parseText;
   exports.addSumsToTable = addSumsToTable;
 }
