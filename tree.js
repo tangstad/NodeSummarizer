@@ -42,21 +42,22 @@ var textTo2dArray = function (textTable) {
     var rows = [];
 
     var isNumber = function (s) {
+        s = s.replace(",", ".");
         return (s - 0) == s && s.length > 0;
     };
 
     var validLine = function(line) {
-        return line && isNumber(line.split("\t")[2].replace(",", "."));
+        var id = line.split("\t")[2];
+        return line && isNumber(id);
     };
 
     length = lines.length;
 
     for (i=0; i<length; i++) {
-        if (!validLine(lines[i])) {
-            continue;
+        if (validLine(lines[i])) {
+            row = lines[i].split("\t");
+            rows.push(row);
         }
-        row = lines[i].split("\t");
-        rows.push(row);
     }
     return rows;
 };
