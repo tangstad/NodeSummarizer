@@ -110,17 +110,25 @@ Table.prototype.findRoot = function (nodes) {
     }
 }
 
-var parseText = function (text) {
+var makeNodes = function (table) {
     var nodes = {};
-    var table = new Table(text);
-    var firstLine = true;
-    
+
     var addNode = function (parent, id, value) {
         if (value) {
             value = value.replace(",", ".");
         }
         nodes[id] = new Tree(parseFloat(value, 10), id);
     };
+
+    table.eachLine(addNode);
+
+    return nodes;
+};
+
+var parseText = function (text) {
+    var nodes;
+    var table = new Table(text);
+    var firstLine = true;
 
     var addToParent = function (parent, id, value) {
         if (firstLine) {
@@ -134,7 +142,7 @@ var parseText = function (text) {
         }
     };
 
-    table.eachLine(addNode);
+    nodes = makeNodes(table);
     table.eachLine(addToParent);
 
     return table.findRoot(nodes);
