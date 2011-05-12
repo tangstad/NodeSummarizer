@@ -94,19 +94,6 @@ Table.prototype.eachLine = function (f) {
     }
 };
 
-var makeNodes = function (table) {
-    var nodes = {};
-
-    table.eachLine(function (parent, id, value) {
-        if (value) {
-            value = value.replace(",", ".");
-        }
-        nodes[id] = new Tree(parseFloat(value, 10), id);
-    });
-    
-    return nodes;
-};
-
 var connectNodes = function (nodes, table) {
     var firstLine = true;
     
@@ -137,7 +124,14 @@ var parseText = function (text) {
     var nodes = {};
     var lines = text.split("\n");
     var table = new Table(text);
-    nodes = makeNodes(table);
+
+    table.eachLine(function (parent, id, value) {
+        if (value) {
+            value = value.replace(",", ".");
+        }
+        nodes[id] = new Tree(parseFloat(value, 10), id);
+    });
+
     connectNodes(nodes, table);
     return findRoot(nodes, table);
 };
