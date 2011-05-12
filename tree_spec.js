@@ -41,6 +41,23 @@ vows.describe('Node Summarizer').addBatch({
             }
         },
 
+        'when we have an extra line at end': {
+            topic: addSumsToTable(makeTable([" root 15", ""])),
+
+            'should ignore extra empty line': function (data) {
+                assert.equal(data.output, makeTable([" root 15 15"]));
+            }
+        },
+
+        'when we have an extra line in the middle': {
+            topic: addSumsToTable(makeTable([" root 15", "", "root child 20"])),
+
+            'should ignore extra empty line': function (data) {
+                assert.equal(data.output, makeTable([" root 15 35",
+                                                     "root child 20 20"]));
+            }
+        },
+
         'when we have two rows with integer values': {
             topic: addSumsToTable(makeTable([" root 10",
                                              "root child 15"])),
