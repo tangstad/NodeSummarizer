@@ -112,6 +112,7 @@ Table.prototype.findRoot = function (nodes) {
 
 var makeNodes = function (table) {
     var nodes = {};
+    var firstLine = true;
 
     var addNode = function (parent, id, value) {
         if (value) {
@@ -119,16 +120,6 @@ var makeNodes = function (table) {
         }
         nodes[id] = new Tree(parseFloat(value, 10), id);
     };
-
-    table.eachLine(addNode);
-
-    return nodes;
-};
-
-var parseText = function (text) {
-    var nodes;
-    var table = new Table(text);
-    var firstLine = true;
 
     var addToParent = function (parent, id, value) {
         if (firstLine) {
@@ -142,8 +133,17 @@ var parseText = function (text) {
         }
     };
 
-    nodes = makeNodes(table);
+    table.eachLine(addNode);
     table.eachLine(addToParent);
+
+    return nodes;
+};
+
+var parseText = function (text) {
+    var nodes;
+    var table = new Table(text);
+
+    nodes = makeNodes(table);
 
     return table.findRoot(nodes);
 };
