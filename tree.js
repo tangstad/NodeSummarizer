@@ -130,17 +130,27 @@ var parseText = function (text) {
 };
 
 var Table = function (textTable) {
-    this.lines = textTable.split("\n");
+    var lines = textTable.split("\n");
+    var i;
+
+    this.length = lines.length;
+    this.data = [];
+
+    for (i=0; i<this.length; i++) {
+        this.data.push(lines[i].split("\t"));
+    }
 };
 
 Table.prototype.eachLine = function (f) {
-    var data, parent, id, value, i;
+    var line, parent, id, value, i;
 
-    for (i=0; i<this.lines.length; i++) {
-        data = this.lines[i].split("\t");
-        parent = data[0];
-        id = data[1];
-        value = data[2];
+    for (i=0; i<this.length; i++) {
+        line = this.data[i];
+
+        parent = line[0];
+        id = line[1];
+        value = line[2];
+
         f(parent, id, value);
     }
 };
