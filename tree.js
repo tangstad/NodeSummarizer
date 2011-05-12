@@ -94,22 +94,6 @@ Table.prototype.eachLine = function (f) {
     }
 };
 
-var connectNodes = function (nodes, table) {
-    var firstLine = true;
-    
-    table.eachLine(function (parent, id, value) {
-        if (firstLine) {
-            firstLine = false;
-            if (isNaN(parseInt(value, 10))) {
-                return;
-            }
-        }
-        if (parent !== "") {
-            nodes[parent].addChild(nodes[id]);
-        }
-    });
-};
-
 var findRoot = function (nodes, table) {
     var root;
     table.eachLine(function (parent, id, value) {
@@ -124,7 +108,8 @@ var parseText = function (text) {
     var nodes = {};
     var lines = text.split("\n");
     var table = new Table(text);
-
+    var firstLine = true;
+    
     var addNode = function (parent, id, value) {
         if (value) {
             value = value.replace(",", ".");
@@ -132,9 +117,21 @@ var parseText = function (text) {
         nodes[id] = new Tree(parseFloat(value, 10), id);
     };
 
-    table.eachLine(addNode);
+    var addToParent = function (parent, id, value) {
+        if (firstLine) {
+            firstLine = false;
+            if (isNaN(parseInt(value, 10))) {
+                return;
+            }
+        }
+        if (parent !== "") {
+            nodes[parent].addChild(nodes[id]);
+        }
+    };
 
-    connectNodes(nodes, table);
+    table.eachLine(addNode);
+    table.eachLine(addToParent);
+
     return findRoot(nodes, table);
 };
 
