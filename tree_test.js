@@ -36,17 +36,6 @@ vows.describe('Node Summarizer').addBatch({
                 tree.addDetails(out);
                 assert.deepEqual(out, [tree.to_s()]);
             },
-
-            'and asked for list of all nodes': {
-                topic: function (tree) {
-                    return { nodes: tree.getNodes(),
-                             tree: tree };
-                },
-
-                'should return itself, keyed with id': function (topic) {
-                    assert.deepEqual(topic.nodes, { 1: topic.tree });
-                }
-            }
         },
 
         'when it has a decimal value': {
@@ -89,19 +78,6 @@ vows.describe('Node Summarizer').addBatch({
                 assert.length(out, 2);
                 assert.include(out, "1\t2\t10\t10");
                 assert.include(out, "\t1\t20\t30");
-            },
-
-            'and asked for list of all nodes': {
-                topic: function (parent) {
-                    return { nodes: parent.getNodes(),
-                             parent: parent };
-                },
-
-                'should return itself, keyed with id': function (topic) {
-                    var child = topic.parent.getChildren()[0];
-                    assert.deepEqual(topic.nodes, { 1: topic.parent,
-                                                    2: child });
-                }
             }
         },
     
@@ -126,21 +102,6 @@ vows.describe('Node Summarizer').addBatch({
                 assert.include(out, "\t10\t30\t60");
                 assert.include(out, "10\t11\t10\t10");
                 assert.include(out, "10\t12\t20\t20");
-            },
-
-            'and asked for list of all nodes': {
-                topic: function (parent) {
-                    return { nodes: parent.getNodes(),
-                             parent: parent };
-                },
-
-                'should return itself, keyed with id': function (topic) {
-                    var child1 = topic.parent.getChildren()[0];
-                    var child2 = topic.parent.getChildren()[1];
-                    assert.deepEqual(topic.nodes, { 10: topic.parent,
-                                                    11: child1,
-                                                    12: child2 });
-                }
             }
         }
     },
