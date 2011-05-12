@@ -51,6 +51,18 @@ vows.describe('Node Summarizer').addBatch({
                 assert.equal(data, makeTable(["root child 15 15",
                                               " root 10 25"]));
             }
+        },
+
+        'when we have two children with comma based decimal values': {
+            topic: addSumsToTable(makeTable([" root 10,5",
+                                             "root child1 15,3",
+                                             "root child2 25,4"])),
+
+            'add sum to both rows, keeping order': function (data) {
+                assert.equal(data, makeTable([" root 10,5 51,2",
+                                              "root child1 15,3 15,3",
+                                              "root child2 25,4 25,4"]));
+            }
         }
     }
 }).run();

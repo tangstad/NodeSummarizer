@@ -147,7 +147,7 @@ var addSumsToTable = function (table) {
         parent = data[0];
         id = data[1];
         value = data[2];
-        sum = nodes[id].sum();
+        sum = commafy(nodes[id].sum());
 
         out.push([parent, id, value, sum].join("\t"));
     }
