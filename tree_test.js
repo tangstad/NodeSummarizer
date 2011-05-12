@@ -29,13 +29,7 @@ vows.describe('Node Summarizer').addBatch({
             
             'should have id, value and sum as string representation': function (tree) {
                 assert.equal(tree.to_s(), "\t1\t125\t125");
-            },
-
-            'should output own details to list': function (tree) {
-                var out = [];
-                tree.addDetails(out);
-                assert.deepEqual(out, [tree.to_s()]);
-            },
+            }
         },
 
         'when it has a decimal value': {
@@ -70,14 +64,6 @@ vows.describe('Node Summarizer').addBatch({
         
             'should calculate sum from values of self and child': function (parent) {
                 assert.equal(parent.sum(), 10+20);
-            },
-            
-            'should put details of self and child in list': function (parent) {
-                var out = [];
-                parent.addDetails(out);
-                assert.length(out, 2);
-                assert.include(out, "1\t2\t10\t10");
-                assert.include(out, "\t1\t20\t30");
             }
         },
     
@@ -93,15 +79,6 @@ vows.describe('Node Summarizer').addBatch({
         
             'should calculate sum from self and all children': function (parent) {
                 assert.equal(parent.sum(), 10+20+30);
-            },
-            
-            'should put details of self and all children in list': function (parent) {
-                var out = [];
-                parent.addDetails(out);
-                assert.length(out, 3);
-                assert.include(out, "\t10\t30\t60");
-                assert.include(out, "10\t11\t10\t10");
-                assert.include(out, "10\t12\t20\t20");
             }
         }
     },

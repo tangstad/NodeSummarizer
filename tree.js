@@ -24,16 +24,6 @@ Tree.prototype.to_s = function (parent_id) {
     return parent_id + "\t" + this.id + "\t" + commafy(this.value) + "\t" + commafy(this.sum());
 };
 
-Tree.prototype.addDetails = function (out, parent_id) {
-    var len = this.children.length;
-    var i;
-
-    out.push(this.to_s(parent_id));
-    for (i=0; i<len; i++) {
-        this.children[i].addDetails(out, this.id);
-    }
-};
-
 // Since we recurse to get all values, the sum is calculated only once, then 
 // cached
 Tree.prototype.sum = function () {
