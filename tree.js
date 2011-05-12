@@ -45,7 +45,11 @@ var textTo2dArray = function (textTable) {
         return (s - 0) == s && s.length > 0;
     };
 
-    if (lines && lines[0] && !isNumber(lines[0].split("\t")[2].replace(",", "."))) {
+    var validLine = function(line) {
+        return line && isNumber(line.split("\t")[2].replace(",", "."));
+    };
+
+    if (lines && !validLine(lines[0])) {
         lines.splice(0, 1);
     }
 
