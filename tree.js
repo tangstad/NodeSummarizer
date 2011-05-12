@@ -94,15 +94,21 @@ Table.prototype.eachLine = function (f) {
     }
 };
 
-var findRoot = function (nodes, table) {
-    var root;
-    table.eachLine(function (parent, id, value) {
+Table.prototype.findRoot = function (nodes) {
+    var line, parent, id, value, i;
+
+    for (i=0; i<this.length; i++) {
+        line = this.data[i];
+
+        parent = line[0];
+        id = line[1];
+        value = line[2];
+
         if (id !== undefined && parent === "") {
-            root = nodes[id];
+            return nodes[id];
         }
-    });
-    return root;
-};
+    }
+}
 
 var parseText = function (text) {
     var nodes = {};
@@ -131,7 +137,7 @@ var parseText = function (text) {
     table.eachLine(addNode);
     table.eachLine(addToParent);
 
-    return findRoot(nodes, table);
+    return table.findRoot(nodes);
 };
 
 // main function, add row of sums to table of nodes
