@@ -49,14 +49,10 @@ var textTo2dArray = function (textTable) {
         return line && isNumber(line.split("\t")[2].replace(",", "."));
     };
 
-    if (lines && !validLine(lines[0])) {
-        lines.splice(0, 1);
-    }
-
     length = lines.length;
 
     for (i=0; i<length; i++) {
-        if (lines[i] == "") {
+        if (!validLine(lines[i])) {
             continue;
         }
         row = lines[i].split("\t");
