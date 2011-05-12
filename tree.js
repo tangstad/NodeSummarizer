@@ -38,9 +38,18 @@ Tree.prototype.sum = function () {
 
 var textTo2dArray = function (textTable) {
     var lines = textTable.split("\n");
-    var i, row;
-    var length = lines.length;
+    var i, row, length;
     var rows = [];
+
+    var isNumber = function (s) {
+        return (s - 0) == s && s.length > 0;
+    };
+
+    if (lines && lines[0] && !isNumber(lines[0].split("\t")[2].replace(",", "."))) {
+        lines.splice(0, 1);
+    }
+
+    length = lines.length;
 
     for (i=0; i<length; i++) {
         if (lines[i] == "") {

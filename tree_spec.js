@@ -25,6 +25,14 @@ vows.describe('Node Summarizer').addBatch({
             }
         },
 
+        'when header contains no numbers': {
+            topic: addSumsToTable("some\theader\ttext"),
+
+            'should ignore header and return empty result': function (data) {
+                assert.equal(data.output, "");
+            }
+        },
+
         'when we have a single row with integer value': {
             topic: addSumsToTable(makeTable([" root 10"])),
 
