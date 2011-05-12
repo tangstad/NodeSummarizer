@@ -70,14 +70,21 @@ Tree.prototype.sum = function () {
 
 var Table = function (textTable) {
     var lines = textTable.split("\n");
-    var i;
+    var id, i, row;
 
-    this.length = lines.length;
+    var origLength = lines.length;
     this.data = [];
 
-    for (i=0; i<this.length; i++) {
-        this.data.push(lines[i].split("\t"));
+    for (i=0; i<origLength; i++) {
+        row = lines[i].split("\t");
+        id = row[1];
+        if (id === undefined) {
+            continue;
+        }
+        this.data.push(row);
     }
+
+    this.length = this.data.length;
 };
 
 Table.prototype.eachLine = function (f) {
@@ -104,7 +111,7 @@ Table.prototype.findRoot = function (nodes) {
         id = line[1];
         value = line[2];
 
-        if (id !== undefined && parent === "") {
+        if (parent === "") {
             return nodes[id];
         }
     }
@@ -115,9 +122,6 @@ Table.prototype.makeNodes = function () {
     var firstLine = true;
 
     var addNode = function (parent, id, value) {
-        if (id === undefined) {
-            return;
-        }
         if (value) {
             value = value.replace(",", ".");
         }
@@ -158,9 +162,6 @@ var addSumsToTable = function (tableText) {
     var out = [];
 
     table.eachLine(function(parent, id, value) {
-        if (id === undefined) {
-            return;
-        }
         var sum = commafy(nodes[id].sum());
         out.push([parent, id, value, sum].join("\t"));
     });
