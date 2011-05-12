@@ -26,20 +26,8 @@ vows.describe('Node Summarizer').addBatch({
             'should have the same sub-tree sum as its own value': function (tree) {
                 assert.equal(tree.sum(), 125);
             },
-            
-            'should have id, value and sum as string representation': function (tree) {
-                assert.equal(tree.to_s(), "\t1\t125\t125");
-            }
         },
 
-        'when it has a decimal value': {
-            topic: new Tree(120.5, 1),
-
-            'should use comma as decimal delimiter in value and sum in string representation': function (tree) {
-                assert.equal(tree.to_s(), "\t1\t120,5\t120,5");
-            },
-        },
-            
         'when made with different id': {
             topic: new Tree(125, 25),
         

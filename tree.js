@@ -19,11 +19,6 @@ var commafy = function (value) {
     return s.replace(".", ",");
 }
 
-Tree.prototype.to_s = function (parent_id) {
-    parent_id = parent_id || "";
-    return parent_id + "\t" + this.id + "\t" + commafy(this.value) + "\t" + commafy(this.sum());
-};
-
 // Since we recurse to get all values, the sum is calculated only once, then 
 // cached
 Tree.prototype.sum = function () {
