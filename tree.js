@@ -106,7 +106,6 @@ var findRoot = function (nodes, table) {
 
 var parseText = function (text) {
     var nodes = {};
-    var lines = text.split("\n");
     var table = new Table(text);
     var firstLine = true;
     
