@@ -68,67 +68,6 @@ Tree.prototype.sum = function () {
     return this.cached_sum;
 };
 
-var makeNodes = function (lines) {
-    var list, id, value, i;
-    var nodes = {};
-
-    for (i=0; i<lines.length; i++) {
-        list = lines[i].split("\t");
-        id = list[1];
-        value = list[2];
-        if (value) {
-            value = value.replace(",", ".");
-        }
-        nodes[id] = new Tree(parseFloat(value, 10), id);
-    }
-    
-    return nodes;
-};
-
-var connectNodes = function (nodes, lines) {
-    var list, id, parent, i, value;
-    
-    for (i=0; i<lines.length; i++) {
-        list = lines[i].split("\t");
-        parent = list[0];
-        id = list[1];
-        if (i === 0) {
-            value = list[2];
-            if (isNaN(parseInt(value, 10))) {
-                continue;
-            }
-        }
-        if (parent !== "") {
-            nodes[parent].addChild(nodes[id]);
-        }
-    }
-};
-
-var findRoot = function (nodes, lines) {
-    var list, id, parent, i;
-    
-    for (i=0; i<lines.length; i++) {
-        if (lines[i] === "") {
-            continue;
-        }
-        list = lines[i].split("\t");
-        parent = list[0];
-        id = list[1];
-        if (parent === "") {
-            return nodes[id];
-        }
-    }    
-};
-
-// Create object of all nodes based on tab-delimited text
-var parseText = function (text) {
-    var nodes = {};
-    var lines = text.split("\n");
-    nodes = makeNodes(lines);
-    connectNodes(nodes, lines);
-    return findRoot(nodes, lines);
-};
-
 var Table = function (textTable) {
     var lines = textTable.split("\n");
     var i;
@@ -153,6 +92,60 @@ Table.prototype.eachLine = function (f) {
 
         f(parent, id, value);
     }
+};
+
+var makeNodes = function (table) {
+    var nodes = {};
+
+    table.eachLine(function (parent, id, value) {
+        if (value) {
+            value = value.replace(",", ".");
+        }
+        nodes[id] = new Tree(parseFloat(value, 10), id);
+    });
+    
+    return nodes;
+};
+
+var connectNodes = function (nodes, table) {
+    var firstLine = true;
+    
+    table.eachLine(function (parent, id, value) {
+        if (firstLine) {
+            firstLine = false;
+            if (isNaN(parseInt(value, 10))) {
+                return;
+            }
+        }
+        if (parent !== "") {
+            nodes[parent].addChild(nodes[id]);
+        }
+    });
+};
+
+var findRoot = function (nodes, lines) {
+    var list, id, parent, i;
+    
+    for (i=0; i<lines.length; i++) {
+        if (lines[i] === "") {
+            continue;
+        }
+        list = lines[i].split("\t");
+        parent = list[0];
+        id = list[1];
+        if (parent === "") {
+            return nodes[id];
+        }
+    }    
+};
+
+var parseText = function (text) {
+    var nodes = {};
+    var lines = text.split("\n");
+    var table = new Table(text);
+    nodes = makeNodes(table);
+    connectNodes(nodes, table);
+    return findRoot(nodes, lines);
 };
 
 // main function, add row of sums to table of nodes
