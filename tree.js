@@ -36,22 +36,25 @@ Tree.prototype.sum = function () {
     return this.cached_sum;
 };
 
-var Table = function (textTable) {
+var textTo2dArray = function (textTable) {
     var lines = textTable.split("\n");
     var id, i, row;
+    var length = lines.length;
+    var data = [];
 
-    var origLength = lines.length;
-    this.data = [];
-
-    for (i=0; i<origLength; i++) {
+    for (i=0; i<length; i++) {
         row = lines[i].split("\t");
         id = row[1];
         if (id === undefined) {
             continue;
         }
-        this.data.push(row);
+        data.push(row);
     }
+    return data;
+};
 
+var Table = function (textTable) {
+    this.data = textTo2dArray(textTable);
     this.length = this.data.length;
 };
 
