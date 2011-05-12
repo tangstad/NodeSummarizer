@@ -133,7 +133,7 @@ var parseText = function (text) {
 var addSumsToTable = function (table) {
     var root = parseText(table);
     if (root === undefined) {
-        return "";
+        return { output: "" };
     }
 
     var nodes = root.getNodes();
@@ -151,7 +151,7 @@ var addSumsToTable = function (table) {
 
         out.push([parent, id, value, sum].join("\t"));
     }
-    return out.join("\n");
+    return { output: out.join("\n") };
 };
 
 // export to node.js module

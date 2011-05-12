@@ -21,7 +21,7 @@ vows.describe('Node Summarizer').addBatch({
             topic: addSumsToTable(""),
 
             'should output empty string': function (data) {
-                assert.equal(data, "");
+                assert.equal(data.output, "");
             }
         },
 
@@ -29,7 +29,7 @@ vows.describe('Node Summarizer').addBatch({
             topic: addSumsToTable(makeTable([" root 10"])),
 
             'should add value as sum of self': function (data) {
-                assert.equal(data, makeTable([" root 10 10"]));
+                assert.equal(data.output, makeTable([" root 10 10"]));
             }
         },
 
@@ -38,7 +38,7 @@ vows.describe('Node Summarizer').addBatch({
                                              "root child 15"])),
 
             'add sum to both rows to parent': function (data) {
-                assert.equal(data, makeTable([" root 10 25",
+                assert.equal(data.output, makeTable([" root 10 25",
                                               "root child 15 15"]));
             }
         },
@@ -48,7 +48,7 @@ vows.describe('Node Summarizer').addBatch({
                                              " root 10"])),
 
             'add sum to both rows, keeping order': function (data) {
-                assert.equal(data, makeTable(["root child 15 15",
+                assert.equal(data.output, makeTable(["root child 15 15",
                                               " root 10 25"]));
             }
         },
@@ -59,7 +59,7 @@ vows.describe('Node Summarizer').addBatch({
                                              "root child2 25,4"])),
 
             'add sum to both rows, keeping order': function (data) {
-                assert.equal(data, makeTable([" root 10,5 51,2",
+                assert.equal(data.output, makeTable([" root 10,5 51,2",
                                               "root child1 15,3 15,3",
                                               "root child2 25,4 25,4"]));
             }
