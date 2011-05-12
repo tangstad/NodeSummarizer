@@ -129,12 +129,15 @@ var parseText = function (text) {
     return findRoot(nodes, lines);
 };
 
-var iterateTable = function (table, f) {
-    var data, parent, id, value, i;
-    var lines = table.split("\n");
+var Table = function (textTable) {
+    this.lines = textTable.split("\n");
+};
 
-    for (i=0; i<lines.length; i++) {
-        data = lines[i].split("\t");
+Table.prototype.eachLine = function (f) {
+    var data, parent, id, value, i;
+
+    for (i=0; i<this.lines.length; i++) {
+        data = this.lines[i].split("\t");
         parent = data[0];
         id = data[1];
         value = data[2];
@@ -143,16 +146,17 @@ var iterateTable = function (table, f) {
 };
 
 // main function, add row of sums to table of nodes
-var addSumsToTable = function (table) {
-    var root = parseText(table);
+var addSumsToTable = function (tableText) {
+    var root = parseText(tableText);
     if (root === undefined) {
         return { output: "" };
     }
 
     var nodes = root.getNodes();
     var out = [];
+    var table = new Table(tableText);
 
-    iterateTable(table, function(parent, id, value) {
+    table.eachLine(function(parent, id, value) {
         var sum = commafy(nodes[id].sum());
         out.push([parent, id, value, sum].join("\t"));
     });
