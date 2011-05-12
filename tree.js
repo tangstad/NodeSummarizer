@@ -115,6 +115,9 @@ Table.prototype.makeNodes = function () {
     var firstLine = true;
 
     var addNode = function (parent, id, value) {
+        if (id === undefined) {
+            return;
+        }
         if (value) {
             value = value.replace(",", ".");
         }
@@ -168,6 +171,7 @@ var addSumsToTable = function (tableText) {
 // export to node.js module
 if(typeof(exports) !== 'undefined' && exports !== null) {
   exports.Tree = Tree;
+  exports.Table = Table;
   exports.parseText = parseText;
   exports.addSumsToTable = addSumsToTable;
 }

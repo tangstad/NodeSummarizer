@@ -3,6 +3,7 @@ var vows = require('vows'),
 
 var TreeModule = require('./tree');
 var Tree = TreeModule.Tree;
+var Table = TreeModule.Table;
 var parseText = TreeModule.parseText;
     
 vows.describe('Node Summarizer').addBatch({
@@ -140,6 +141,16 @@ vows.describe('Node Summarizer').addBatch({
                                                     11: child1,
                                                     12: child2 });
                 }
+            }
+        }
+    },
+
+    'Table': {
+        'with empty input': {
+            topic: new Table(""),
+
+            'should have no nodes': function (table) {
+                assert.deepEqual(table.makeNodes(), {});
             }
         }
     },
