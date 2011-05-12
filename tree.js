@@ -150,14 +150,12 @@ var parseText = function (text) {
 
 // main function, add row of sums to table of nodes
 var addSumsToTable = function (tableText) {
-    var root = parseText(tableText);
-    if (root === undefined) {
+    if (tableText === "") {
         return { output: "" };
     }
-
-    var nodes = root.getNodes();
-    var out = [];
     var table = new Table(tableText);
+    var nodes = makeNodes(table);
+    var out = [];
 
     table.eachLine(function(parent, id, value) {
         var sum = commafy(nodes[id].sum());
