@@ -79,22 +79,6 @@ Table.prototype.eachLine = function (f) {
     }
 };
 
-Table.prototype.findRoot = function (nodes) {
-    var line, parent, id, value, i;
-
-    for (i=0; i<this.length; i++) {
-        line = this.rows[i];
-
-        parent = line[0];
-        id = line[1];
-        value = line[2];
-
-        if (parent === "") {
-            return nodes[id];
-        }
-    }
-}
-
 Table.prototype.makeNodes = function () {
     var nodes = {};
     var firstLine = true;
