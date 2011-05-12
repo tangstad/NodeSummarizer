@@ -125,12 +125,14 @@ var parseText = function (text) {
     var lines = text.split("\n");
     var table = new Table(text);
 
-    table.eachLine(function (parent, id, value) {
+    var addNode = function (parent, id, value) {
         if (value) {
             value = value.replace(",", ".");
         }
         nodes[id] = new Tree(parseFloat(value, 10), id);
-    });
+    };
+
+    table.eachLine(addNode);
 
     connectNodes(nodes, table);
     return findRoot(nodes, table);
