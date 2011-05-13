@@ -60,6 +60,24 @@ vows.describe('Node Summarizer').addBatch({
             }
         },
 
+        'when input data has both newline and linefeed': {
+            topic: addSumsToTable("\troot\t10\r\nroot\tchild\t15"),
+
+            'should output data delimited with normal newlines': function (data) {
+                assert.equal(data.output, makeTable([" root 10 25",
+                                                     "root child 15 15"]));
+            }
+        },
+
+        'when input data has both linefeed instead of newline': {
+            topic: addSumsToTable("\troot\t10\rroot\tchild\t15"),
+
+            'should output data delimited with normal newlines': function (data) {
+                assert.equal(data.output, makeTable([" root 10 25",
+                                                     "root child 15 15"]));
+            }
+        },
+
         'when we have two rows with integer values': {
             topic: addSumsToTable(makeTable([" root 10",
                                              "root child 15"])),

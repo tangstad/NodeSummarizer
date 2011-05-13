@@ -36,8 +36,12 @@ Tree.prototype.sum = function () {
     return this.cached_sum;
 };
 
+var splitOnLineEndings = function (s) {
+    return s.replace(/\r\n|\r/g, '\n').split("\n");
+};
+
 var textTo2dArray = function (textTable) {
-    var lines = textTable.split("\n");
+    var lines = splitOnLineEndings(textTable);
     var rows = [];
     var row;
 
