@@ -19,6 +19,11 @@ var commafy = function (value) {
     return s.replace(".", ",");
 }
 
+// turn comma based decimal string to period based
+var uncommafy = function (s) {
+    return s.replace(",", ".");
+}
+
 // Since we recurse to get all values, the sum is calculated only once, then 
 // cached
 Tree.prototype.sum = function () {
@@ -46,7 +51,7 @@ var textTo2dArray = function (textTable) {
     var row;
 
     var isNumber = function (s) {
-        s = s.replace(",", ".");
+        s = uncommafy(s);
         return (s - 0) == s && s.length > 0;
     };
 
@@ -89,7 +94,7 @@ Table.prototype.makeNodes = function () {
 
     var addNode = function (parent, id, value) {
         if (value) {
-            value = value.replace(",", ".");
+            value = uncommafy(value);
         }
         nodes[id] = new Tree(parseFloat(value, 10), id);
     };
